@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="情景公司有一个Quartz定时调度工程, 有web可视界面可以配置操作. 里面包含了大量调用外部接口采集数据的job. 现在要为其中移动数据接口的采集做防止数据重复插入的功能, 这就需要在数据插入前先查询数据已避免重复插入. 现在的问题是移动接口有几十个, 每个都单独处理未免太麻烦, 我注意到job的配置信息中包含Bean的完整类名,类似 于:com.wisesoft.bigdata.model.">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-26T06:51:28.981Z">
+<meta property="og:updated_time" content="2019-07-26T06:53:03.648Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java反射学习2">
 <meta name="twitter:description" content="情景公司有一个Quartz定时调度工程, 有web可视界面可以配置操作. 里面包含了大量调用外部接口采集数据的job. 现在要为其中移动数据接口的采集做防止数据重复插入的功能, 这就需要在数据插入前先查询数据已避免重复插入. 现在的问题是移动接口有几十个, 每个都单独处理未免太麻烦, 我注意到job的配置信息中包含Bean的完整类名,类似 于:com.wisesoft.bigdata.model.">
@@ -110,18 +110,18 @@
 <p>第一个参数为方法名, 第二个参数为方法参数的类型. 由于这里的eq方法继承自父类, 所以使用getMethod方法.</p>
 <blockquote>
 <p>getMethod和getDeclaredMethod方法的区别: getDeclaredMethod可以获取当前类的所有声明的方法. getMethod获取当前类以及所有父类的public方法.</p>
-<ol start="4">
-<li>调用方法</li>
-</ol>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object eqMobileObject = eq.invoke(mobileObject, COUNT_DATE, time);</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>调用方法<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object eqMobileObject = eq.invoke(mobileObject, COUNT_DATE, time);</span><br></pre></td></tr></table></figure>
 
+</li>
+</ol>
 <p>第一个参数为调用此方法的实例, 后面参数为传递给方法的参数, 调用成功返回返回值.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/26/Java反射学习2/" data-id="cjyjqzgsg000aa30rxle2q0b8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/26/Java反射学习2/" data-id="cjyjr1dzi000adq0rhhqqjanb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java基础/">Java基础</a></li></ul>
