@@ -62,6 +62,74 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Java反射学习2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/26/Java反射学习2/" class="article-date">
+  <time datetime="2019-07-26T06:50:05.000Z" itemprop="datePublished">2019-07-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/26/Java反射学习2/">Java反射学习2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="情景"><a href="#情景" class="headerlink" title="情景"></a>情景</h1><p>公司有一个Quartz定时调度工程, 有web可视界面可以配置操作. 里面包含了大量调用外部接口采集数据的job. 现在要为其中移动数据接口的采集做防止数据重复插入的功能, 这就需要在数据插入前先查询数据已避免重复插入.</p>
+<p>现在的问题是移动接口有几十个, 每个都单独处理未免太麻烦, 我注意到job的配置信息中包含Bean的完整类名,类似 于:com.wisesoft.bigdata.model.vo.MdaygenderVO. 于是想到可以利用反射来写一个统一的方法来进行判断.</p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><ol>
+<li>使用完整类名获取对应的VO类(由于项目使用的公司的框架, Bean的实现与一般意义的Bean稍有区别, 可以通过VO对象进行CRUD).</li>
+<li>由于CRUD操作方法继承自父类, 使用Class的方法getMethod来获取方法, 然后调用方法.</li>
+</ol>
+<h2 id="主要实现代码"><a href="#主要实现代码" class="headerlink" title="主要实现代码"></a>主要实现代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 根据时间判断移动数据是否存在</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> className</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> time</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> boolean</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isMobileDataExist</span><span class="params">(String className, String time)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Class mobileClass = Class.forName(className);</span><br><span class="line">        Object mobileObject = mobileClass.newInstance();</span><br><span class="line">        <span class="comment">/*未使用反射时的查询语句类似于:</span></span><br><span class="line"><span class="comment">        List result = new MdaysourcecityVO().eq(COUNT_DATE, time).query();*/</span></span><br><span class="line">        Method eq = mobileClass.getMethod(<span class="string">"eq"</span>, <span class="keyword">new</span> Class[]&#123;String.class, Object.class&#125;);</span><br><span class="line">        Method query = mobileClass.getMethod(<span class="string">"query"</span>);</span><br><span class="line">        Object eqMobileObject = eq.invoke(mobileObject, COUNT_DATE, time);</span><br><span class="line">        List queryResult = (List) query.invoke(eqMobileObject);</span><br><span class="line">        <span class="keyword">if</span> (queryResult.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h1><ol>
+<li><p>通过完整类名获取类的类型信息Class</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class mobileClass = Class.forName(className);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过Class获取类的实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object mobileObject = mobileClass.newInstance();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用getMethod获取方法的Method对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Method eq = mobileClass.getMethod(<span class="string">"eq"</span>, <span class="keyword">new</span> Class[]&#123;String.class, Object.class&#125;);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>第一个参数为方法名, 第二个参数为方法参数的类型. 由于这里的eq方法继承自父类, 所以使用getMethod方法.</p>
+<blockquote>
+<p>getMethod和getDeclaredMethod方法的区别: getDeclaredMethod可以获取当前类的所有声明的方法. getMethod获取当前类以及所有父类的public方法.</p>
+<ol start="4">
+<li>调用方法</li>
+</ol>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Object eqMobileObject = eq.invoke(mobileObject, COUNT_DATE, time);</span><br></pre></td></tr></table></figure>
+
+<p>第一个参数为调用此方法的实例, 后面参数为传递给方法的参数, 调用成功返回返回值.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/26/Java反射学习2/" data-id="cjyjqzgsg000aa30rxle2q0b8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java基础/">Java基础</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Java反射学习" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/05/15/Java反射学习/" class="article-date">
@@ -95,7 +163,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/15/Java反射学习/" data-id="cjyjqq7cd0006uq0rkv8adeok" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/05/15/Java反射学习/" data-id="cjyjqzgsd0005a30rfkx676l0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java基础/">Java基础</a></li></ul>
@@ -161,7 +229,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/18/面向对象设计基本原则：SOLID/" data-id="cjyjqq7d5001puq0raljidw00" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/18/面向对象设计基本原则：SOLID/" data-id="cjyjqzgt4001ra30rvaxbnorl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基本原则/">基本原则</a></li></ul>
@@ -204,7 +272,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/14/Session-Cookie/" data-id="cjyjqq7ck000juq0r1luk8tmo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/14/Session-Cookie/" data-id="cjyjqzgsm000la30reev7ehq9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web基础/">web基础</a></li></ul>
@@ -248,7 +316,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/02/25/多线程学习/" data-id="cjyjqq7d0001guq0rnaz984z2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/02/25/多线程学习/" data-id="cjyjqzgsz001ga30ro8y5zqm0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
@@ -306,7 +374,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/18/rabbitmq-websocket实现消息推送/" data-id="cjyjqq7cp000puq0rc1s9nklo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/18/rabbitmq-websocket实现消息推送/" data-id="cjyjqzgsq000ra30rcrok7zjo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/消息队列/">消息队列</a></li></ul>
@@ -347,7 +415,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/03/layUI-laypage分页实现/" data-id="cjyjqq7co000nuq0rap18wxoz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/01/03/layUI-laypage分页实现/" data-id="cjyjqzgsp000pa30rb134kydi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/layUI/">layUI</a></li></ul>
@@ -395,7 +463,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/28/apiDoc基本使用/" data-id="cjyjqq7cm000luq0rkabnf69l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/12/28/apiDoc基本使用/" data-id="cjyjqzgso000na30rj2rd9swa" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/apiDoc/">apiDoc</a></li></ul>
@@ -438,7 +506,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/21/MyBatis批量更新写法/" data-id="cjyjqq7cf000auq0rte027wk2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/12/21/MyBatis批量更新写法/" data-id="cjyjqzgsi000ea30rgisf5oa7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MyBatis/">MyBatis</a></li></ul>
@@ -479,54 +547,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/14/MySQL用word方式导出表结构/" data-id="cjyjqq7ch000euq0redldwyar" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/12/14/MySQL用word方式导出表结构/" data-id="cjyjqzgsl000ja30rk9tu6b2l" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Maven学习" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/12/09/Maven学习/" class="article-date">
-  <time datetime="2018-12-09T03:07:19.000Z" itemprop="datePublished">2018-12-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/09/Maven学习/">Maven学习</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>虽然我一直都在用Maven构建项目，但是真实情况是，对Maven的了解只有一点皮毛，基本上除了除了依赖、clean、install就什么都不知道了。使用过程中经常有一些错误的使用方式，离发挥Maven的最大威力还有很远的差距。所以决定参考《Maven实战》来做一个系统的学习。</p>
-<h1 id="为什么用Maven"><a href="#为什么用Maven" class="headerlink" title="为什么用Maven"></a>为什么用Maven</h1><blockquote>
-<p>构建：编译、运行单元测试、生成文档、打包和部署。</p>
-</blockquote>
-<p>自动化构建，抽象构建过程，提供构建任务实现（自己编写实现插件）</p>
-<h1 id="什么是Maven"><a href="#什么是Maven" class="headerlink" title="什么是Maven"></a>什么是Maven</h1><p>Maven不仅仅是构建工具，还是一个依赖管理工具和项目信息管理工具。它提供了中央仓库，能帮助我们自动下载构建。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/09/Maven学习/" data-id="cjyjqq7cg000buq0r41fpnpro" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Maven/">Maven</a></li></ul>
 
     </footer>
   </div>
@@ -570,7 +594,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AOP/" style="font-size: 15px;">AOP</a> <a href="/tags/APACHE-POI/" style="font-size: 10px;">APACHE POI</a> <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/JavaSE/" style="font-size: 10px;">JavaSE</a> <a href="/tags/JavaWeb/" style="font-size: 20px;">JavaWeb</a> <a href="/tags/Java基础/" style="font-size: 10px;">Java基础</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/apiDoc/" style="font-size: 10px;">apiDoc</a> <a href="/tags/freemarker/" style="font-size: 10px;">freemarker</a> <a href="/tags/layUI/" style="font-size: 10px;">layUI</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/web基础/" style="font-size: 10px;">web基础</a> <a href="/tags/单点登陆/" style="font-size: 10px;">单点登陆</a> <a href="/tags/基本原则/" style="font-size: 10px;">基本原则</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/容器/" style="font-size: 10px;">容器</a> <a href="/tags/富文本/" style="font-size: 10px;">富文本</a> <a href="/tags/消息队列/" style="font-size: 20px;">消息队列</a>
+      <a href="/tags/AOP/" style="font-size: 15px;">AOP</a> <a href="/tags/APACHE-POI/" style="font-size: 10px;">APACHE POI</a> <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/JavaSE/" style="font-size: 10px;">JavaSE</a> <a href="/tags/JavaWeb/" style="font-size: 20px;">JavaWeb</a> <a href="/tags/Java基础/" style="font-size: 15px;">Java基础</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/apiDoc/" style="font-size: 10px;">apiDoc</a> <a href="/tags/freemarker/" style="font-size: 10px;">freemarker</a> <a href="/tags/layUI/" style="font-size: 10px;">layUI</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/web基础/" style="font-size: 10px;">web基础</a> <a href="/tags/单点登陆/" style="font-size: 10px;">单点登陆</a> <a href="/tags/基本原则/" style="font-size: 10px;">基本原则</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/容器/" style="font-size: 10px;">容器</a> <a href="/tags/富文本/" style="font-size: 10px;">富文本</a> <a href="/tags/消息队列/" style="font-size: 20px;">消息队列</a>
     </div>
   </div>
 
@@ -579,7 +603,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
     </div>
   </div>
 
@@ -590,6 +614,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/07/26/Java反射学习2/">Java反射学习2</a>
+          </li>
         
           <li>
             <a href="/2019/05/15/Java反射学习/">Java反射学习</a>
@@ -605,10 +633,6 @@
         
           <li>
             <a href="/2019/02/25/多线程学习/">多线程学习</a>
-          </li>
-        
-          <li>
-            <a href="/2019/01/18/rabbitmq-websocket实现消息推送/">rabbitmq+websocket实现消息推送</a>
           </li>
         
       </ul>

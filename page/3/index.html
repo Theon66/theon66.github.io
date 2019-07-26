@@ -62,6 +62,63 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-springboot-RabbitMQ基本使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/26/springboot-RabbitMQ基本使用/" class="article-date">
+  <time datetime="2018-09-26T06:40:05.000Z" itemprop="datePublished">2018-09-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/26/springboot-RabbitMQ基本使用/">springboot中RabbitMQ基本使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="POM配置"><a href="#POM配置" class="headerlink" title="POM配置"></a>POM配置</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spring.rabbitmq.host=localhost</span><br><span class="line">spring.rabbitmq.port=5672</span><br><span class="line">spring.rabbitmq.username=guest</span><br><span class="line">spring.rabbitmq.password=guest</span><br></pre></td></tr></table></figure>
+
+<h1 id="发送消息"><a href="#发送消息" class="headerlink" title="发送消息"></a>发送消息</h1><p>引用一句官方文档的话</p>
+<blockquote>
+<p>Spring’s AmqpTemplate and AmqpAdmin are auto-configured, and you can autowire them directly into your own beans</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.amqp.core.AmqpTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Sender</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> AmqpTemplate rabbitTemplate;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"发送消息中...."</span>);</span><br><span class="line">        <span class="comment">//参数1:队列名, 参数2:消息</span></span><br><span class="line">        rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_NAME,</span><br><span class="line">                <span class="string">"大家好,我是周杰伦"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="接收消息"><a href="#接收消息" class="headerlink" title="接收消息"></a>接收消息</h1><blockquote>
+<p>When the Rabbit infrastructure is present, any bean can be annotated with @RabbitListener to create a listener endpoint. If no RabbitListenerContainerFactory has been defined, a default SimpleRabbitListenerContainerFactory is automatically configured and you can switch to a direct container using the spring.rabbitmq.listener.type property. If a MessageConverter or a MessageRecoverer bean is defined, it is automatically associated with the default factory.</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.amqp.core.AmqpTemplate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.amqp.rabbit.annotation.RabbitListener;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Reciever</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> AmqpTemplate rabbitTemplate;</span><br><span class="line">    <span class="meta">@RabbitListener</span>(queues = RabbitMQConfig.QUEUE_NAME)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">recieveMessage</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Recieved &lt;"</span> + message + <span class="string">"&gt;"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringRunner.class)</span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitMQTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> Sender sender;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        sender.send();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="http://blog.720ui.com/2017/springboot_06_mq_rabbitmq/#Spring-Boot-%E6%95%B4%E5%90%88-RabbitMQ" target="_blank" rel="noopener">http://blog.720ui.com/2017/springboot_06_mq_rabbitmq/#Spring-Boot-%E6%95%B4%E5%90%88-RabbitMQ</a></li>
+<li><a href="https://docs.spring.io/spring-boot/docs/2.0.6.BUILD-SNAPSHOT/reference/htmlsingle/" target="_blank" rel="noopener">https://docs.spring.io/spring-boot/docs/2.0.6.BUILD-SNAPSHOT/reference/htmlsingle/</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/26/springboot-RabbitMQ基本使用/" data-id="cjyjqzgsq000ta30rg1qv1ptk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/消息队列/">消息队列</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-枚举学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/09/25/枚举学习笔记/" class="article-date">
@@ -102,7 +159,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/25/枚举学习笔记/" data-id="cjyjqq7d2001juq0rir7405xf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/25/枚举学习笔记/" data-id="cjyjqzgt2001na30r2kw4mmuv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaSE/">JavaSE</a></li></ul>
@@ -152,7 +209,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/21/反序列化中的时间格式化/" data-id="cjyjqq7cw0017uq0r4exjpwbf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/21/反序列化中的时间格式化/" data-id="cjyjqzgsx001ba30ry5adc0br" class="article-share-link">Share</a>
       
       
     </footer>
@@ -201,7 +258,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/21/异步上传文件/" data-id="cjyjqq7d4001nuq0rkmyyy0lc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/21/异步上传文件/" data-id="cjyjqzgt0001ja30rke90wizi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -252,7 +309,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/11/ueditor插件上传配置/" data-id="cjyjqq7cr000vuq0rpw8lwlgb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/11/ueditor插件上传配置/" data-id="cjyjqzgss000xa30ryguan47k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/富文本/">富文本</a></li></ul>
@@ -302,7 +359,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/03/多文件上传接口实现/" data-id="cjyjqq7cy001cuq0r2r1jh1l9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/09/03/多文件上传接口实现/" data-id="cjyjqzgsy001da30r51i8cl75" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/API/">API</a></li></ul>
@@ -375,7 +432,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/15/spring-boot 搭建记录/" data-id="cjyjqq7cq000ruq0rngiu07aj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/08/15/spring-boot 搭建记录/" data-id="cjyjqzgsr000va30r2eldk7tb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
@@ -422,7 +479,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/14/AOP实例：日志记录/" data-id="cjyjqq7ca0004uq0r6gio0ikc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/08/14/AOP实例：日志记录/" data-id="cjyjqzgsc0004a30rpeugz4qd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AOP/">AOP</a></li></ul>
@@ -474,7 +531,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/12/AOP学习笔记/" data-id="cjyjqq7c10000uq0re4n6dqsg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/08/12/AOP学习笔记/" data-id="cjyjqzgs40000a30rm3svyqtw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AOP/">AOP</a></li></ul>
@@ -517,7 +574,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/09/公司单点登陆学习笔记/" data-id="cjyjqq7cx0019uq0r3m4ejp8t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/08/09/公司单点登陆学习笔记/" data-id="cjyjqzgsv0013a30rvyxqnxt4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/单点登陆/">单点登陆</a></li></ul>
@@ -564,7 +621,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AOP/" style="font-size: 15px;">AOP</a> <a href="/tags/APACHE-POI/" style="font-size: 10px;">APACHE POI</a> <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/JavaSE/" style="font-size: 10px;">JavaSE</a> <a href="/tags/JavaWeb/" style="font-size: 20px;">JavaWeb</a> <a href="/tags/Java基础/" style="font-size: 10px;">Java基础</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/apiDoc/" style="font-size: 10px;">apiDoc</a> <a href="/tags/freemarker/" style="font-size: 10px;">freemarker</a> <a href="/tags/layUI/" style="font-size: 10px;">layUI</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/web基础/" style="font-size: 10px;">web基础</a> <a href="/tags/单点登陆/" style="font-size: 10px;">单点登陆</a> <a href="/tags/基本原则/" style="font-size: 10px;">基本原则</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/容器/" style="font-size: 10px;">容器</a> <a href="/tags/富文本/" style="font-size: 10px;">富文本</a> <a href="/tags/消息队列/" style="font-size: 20px;">消息队列</a>
+      <a href="/tags/AOP/" style="font-size: 15px;">AOP</a> <a href="/tags/APACHE-POI/" style="font-size: 10px;">APACHE POI</a> <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/JavaSE/" style="font-size: 10px;">JavaSE</a> <a href="/tags/JavaWeb/" style="font-size: 20px;">JavaWeb</a> <a href="/tags/Java基础/" style="font-size: 15px;">Java基础</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/apiDoc/" style="font-size: 10px;">apiDoc</a> <a href="/tags/freemarker/" style="font-size: 10px;">freemarker</a> <a href="/tags/layUI/" style="font-size: 10px;">layUI</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/web基础/" style="font-size: 10px;">web基础</a> <a href="/tags/单点登陆/" style="font-size: 10px;">单点登陆</a> <a href="/tags/基本原则/" style="font-size: 10px;">基本原则</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/容器/" style="font-size: 10px;">容器</a> <a href="/tags/富文本/" style="font-size: 10px;">富文本</a> <a href="/tags/消息队列/" style="font-size: 20px;">消息队列</a>
     </div>
   </div>
 
@@ -573,7 +630,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
     </div>
   </div>
 
@@ -584,6 +641,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/07/26/Java反射学习2/">Java反射学习2</a>
+          </li>
         
           <li>
             <a href="/2019/05/15/Java反射学习/">Java反射学习</a>
@@ -599,10 +660,6 @@
         
           <li>
             <a href="/2019/02/25/多线程学习/">多线程学习</a>
-          </li>
-        
-          <li>
-            <a href="/2019/01/18/rabbitmq-websocket实现消息推送/">rabbitmq+websocket实现消息推送</a>
           </li>
         
       </ul>
