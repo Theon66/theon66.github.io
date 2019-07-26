@@ -5,15 +5,20 @@
   
 
   
-  <title>Archives | Hexo</title>
+  <title>初识Docker | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="认识容器 容器是一种标准化的软件单元   有了容器，就可以将软件运行所需的所有资源打包到一个隔离的容器中。容器与虚拟机不同，不需要捆绑一整套操作系统，只需要软件工作所需的库资源和设置。系统因此而变得高效、轻量、自给自足，还能保证部署在任何环境中的软件都能始终如一地运行。  将软件打包成标准化单元，以用于开发、交付和部署容器镜像是轻量的、可执行的独立软件包，包含软件运行所需的所有内容：代码、运行时环">
+<meta name="keywords" content="容器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识Docker">
+<meta property="og:url" content="http://yoursite.com/2018/11/28/初识Docker/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="认识容器 容器是一种标准化的软件单元   有了容器，就可以将软件运行所需的所有资源打包到一个隔离的容器中。容器与虚拟机不同，不需要捆绑一整套操作系统，只需要软件工作所需的库资源和设置。系统因此而变得高效、轻量、自给自足，还能保证部署在任何环境中的软件都能始终如一地运行。  将软件打包成标准化单元，以用于开发、交付和部署容器镜像是轻量的、可执行的独立软件包，包含软件运行所需的所有内容：代码、运行时环">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-02T02:47:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="初识Docker">
+<meta name="twitter:description" content="认识容器 容器是一种标准化的软件单元   有了容器，就可以将软件运行所需的所有资源打包到一个隔离的容器中。容器与虚拟机不同，不需要捆绑一整套操作系统，只需要软件工作所需的库资源和设置。系统因此而变得高效、轻量、自给自足，还能保证部署在任何环境中的软件都能始终如一地运行。  将软件打包成标准化单元，以用于开发、交付和部署容器镜像是轻量的、可执行的独立软件包，包含软件运行所需的所有内容：代码、运行时环">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,226 +65,85 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/05/15/Java反射学习/" class="archive-article-date">
-  <time datetime="2019-05-15T02:41:59.000Z" itemprop="datePublished">May 15</time>
+        <section id="main"><article id="post-初识Docker" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/28/初识Docker/" class="article-date">
+  <time datetime="2018-11-28T01:20:07.000Z" itemprop="datePublished">2018-11-28</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/15/Java反射学习/">Java反射学习</a>
+    <h1 class="article-title" itemprop="name">
+      初识Docker
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="认识容器"><a href="#认识容器" class="headerlink" title="认识容器"></a>认识容器</h1><blockquote>
+<p>容器是一种标准化的软件单元</p>
+</blockquote>
+<blockquote>
+<p>有了容器，就可以将软件运行所需的所有资源打包到一个隔离的容器中。容器与虚拟机不同，不需要捆绑一整套操作系统，只需要软件工作所需的库资源和设置。系统因此而变得高效、轻量、自给自足，还能保证部署在任何环境中的软件都能始终如一地运行。</p>
+</blockquote>
+<h2 id="将软件打包成标准化单元，以用于开发、交付和部署"><a href="#将软件打包成标准化单元，以用于开发、交付和部署" class="headerlink" title="将软件打包成标准化单元，以用于开发、交付和部署"></a>将软件打包成标准化单元，以用于开发、交付和部署</h2><p>容器镜像是轻量的、可执行的独立软件包，包含软件运行所需的所有内容：代码、运行时环境、系统工具、系统库和设置。容器化软件适用于基于 Linux 和 Windows 的应用，在任何环境中都能够始终如一地运行。容器赋予了软件独立性，使其免受外在环境差异（例如，开发和预演环境的差异）的影响，从而有助于减少团队间在相同基础设施上运行不同软件时的冲突。</p>
+<h1 id="什么是Docker"><a href="#什么是Docker" class="headerlink" title="什么是Docker"></a>什么是Docker</h1><blockquote>
+<p>Docker 是世界领先的软件容器平台。开发人员利用 Docker 可以消除协作编码时“在我的机器上可正常工作”的问题。运维人员利用 Docker 可以在隔离容器中并行运行和管理应用，获得更好的计算密度。企业利用 Docker 可以构建敏捷的软件交付管道，以更快的速度、更高的安全性和可靠的信誉为 Linux 和 Windows Server 应用发布新功能。</p>
+</blockquote>
+<h1 id="为什么使用Docker"><a href="#为什么使用Docker" class="headerlink" title="为什么使用Docker"></a>为什么使用Docker</h1><p>抄三段官网首页的话</p>
+<blockquote>
+<p>摆脱应用依赖矩阵<br>消除“在我的机器上可正常工作”的问题，一劳永逸。把应用和其依赖关系一起打包在 Docker 容器中，以便在开发、测试和部署过程中实现可移植性和可预测性。</p>
+</blockquote>
+<blockquote>
+<p>适用于任何技术栈<br>可在任何环境中部署微服务和传统应用，而无需费时费力地重新编码。用容器来隔离应用，消除冲突，加强安全性。</p>
+</blockquote>
+<blockquote>
+<p>更好的团队协作<br>简化开发人员和运维人员间的协作，让各项功能和修复更快地应用到生产环境中。高效的开发人员可以频繁地发布应用，激发创造力，构建绝佳软件。</p>
+</blockquote>
+<h1 id="开发人员使用Docker"><a href="#开发人员使用Docker" class="headerlink" title="开发人员使用Docker"></a>开发人员使用Docker</h1><blockquote>
+<p>Docker 能够自动执行重复性任务，例如搭建和配置开发环境，从而解放了开发人员以便他们专注在真正重要的事情上：构建杰出的软件。<br>开发人员使用了 Docker，就不必安装和配置复杂的数据库，也无需在不兼容语言工具链版本之间切换时担心。应用容器化之后，其复杂性就被转移到能够轻松构建、共享和运行的容器中。当有新同事安排到新的代码库时，无需再费时费力地安装软件和解释设置过程。以 Dockerfile 文件形式发布的代码使用起来非常简单：首先安装 Docker 和编辑器，然后拉取作为 Docker 镜像打包在一起的依赖资源，短短数分钟，就能够构建和调试应用了。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/28/初识Docker/" data-id="cjyjqq7cv0014uq0roq8uyzws" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/容器/">容器</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/09/Maven学习/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Maven学习
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/28/web后端开发学习路线/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">web后端开发学习路线</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/18/面向对象设计基本原则：SOLID/" class="archive-article-date">
-  <time datetime="2019-03-18T00:51:56.000Z" itemprop="datePublished">Mar 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/18/面向对象设计基本原则：SOLID/">面向对象设计基本原则：SOLID</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/14/Session-Cookie/" class="archive-article-date">
-  <time datetime="2019-03-14T08:32:21.000Z" itemprop="datePublished">Mar 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/14/Session-Cookie/">Session &amp; Cookie</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/02/25/多线程学习/" class="archive-article-date">
-  <time datetime="2019-02-25T08:18:07.000Z" itemprop="datePublished">Feb 25</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/25/多线程学习/">多线程学习</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/18/rabbitmq-websocket实现消息推送/" class="archive-article-date">
-  <time datetime="2019-01-18T03:26:19.000Z" itemprop="datePublished">Jan 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/18/rabbitmq-websocket实现消息推送/">rabbitmq+websocket实现消息推送</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/03/layUI-laypage分页实现/" class="archive-article-date">
-  <time datetime="2019-01-03T06:53:08.000Z" itemprop="datePublished">Jan 3</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/03/layUI-laypage分页实现/">layUI laypage分页实现</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/28/apiDoc基本使用/" class="archive-article-date">
-  <time datetime="2018-12-28T03:02:10.000Z" itemprop="datePublished">Dec 28</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/28/apiDoc基本使用/">apiDoc基本使用</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/21/MyBatis批量更新写法/" class="archive-article-date">
-  <time datetime="2018-12-21T01:57:42.000Z" itemprop="datePublished">Dec 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/21/MyBatis批量更新写法/">MyBatis批量更新写法</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/14/MySQL用word方式导出表结构/" class="archive-article-date">
-  <time datetime="2018-12-14T08:02:07.000Z" itemprop="datePublished">Dec 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/14/MySQL用word方式导出表结构/">MySQL用word方式导出表结构</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/09/Maven学习/" class="archive-article-date">
-  <time datetime="2018-12-09T03:07:19.000Z" itemprop="datePublished">Dec 9</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/09/Maven学习/">Maven学习</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-  </nav>
 
 </section>
         

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>AOP实例：日志记录 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="背景公司要求记录报表里用户的操作，以前没有使用过AOP，一开始想着编写几个接口，在要记录的地方调一下接口。其实这种方法很蠢，AOP正是为了解决这种问题而生的。 思路最开始采用自定义注解的方式，即在要记录的方法处加上一句注解。但其实这是一种糟糕的设计，这样会把这些业务模块的关注点变的不单一，业务模块不需要知道自己会不会被记录。 所以采用AspectJ表达式才是正确的姿势。 源码12345678910">
+<meta name="keywords" content="AOP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AOP实例：日志记录">
+<meta property="og:url" content="http://yoursite.com/2018/08/14/AOP实例：日志记录/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="背景公司要求记录报表里用户的操作，以前没有使用过AOP，一开始想着编写几个接口，在要记录的地方调一下接口。其实这种方法很蠢，AOP正是为了解决这种问题而生的。 思路最开始采用自定义注解的方式，即在要记录的方法处加上一句注解。但其实这是一种糟糕的设计，这样会把这些业务模块的关注点变的不单一，业务模块不需要知道自己会不会被记录。 所以采用AspectJ表达式才是正确的姿势。 源码12345678910">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-15T06:12:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AOP实例：日志记录">
+<meta name="twitter:description" content="背景公司要求记录报表里用户的操作，以前没有使用过AOP，一开始想着编写几个接口，在要记录的地方调一下接口。其实这种方法很蠢，AOP正是为了解决这种问题而生的。 思路最开始采用自定义注解的方式，即在要记录的方法处加上一句注解。但其实这是一种糟糕的设计，这样会把这些业务模块的关注点变的不单一，业务模块不需要知道自己会不会被记录。 所以采用AspectJ表达式才是正确的姿势。 源码12345678910">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-AOP实例：日志记录" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/14/AOP实例：日志记录/" class="article-date">
+  <time datetime="2018-08-14T05:59:30.000Z" itemprop="datePublished">2018-08-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/AOP/">AOP</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      AOP实例：日志记录
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>公司要求记录报表里用户的操作，以前没有使用过AOP，一开始想着编写几个接口，在要记录的地方调一下接口。其实这种方法很蠢，AOP正是为了解决这种问题而生的。</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>最开始采用自定义注解的方式，即在要记录的方法处加上一句注解。但其实这是一种糟糕的设计，这样会把这些业务模块的关注点变的不单一，业务模块不需要知道自己会不会被记录。</p>
+<p>所以采用AspectJ表达式才是正确的姿势。</p>
+<h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 记录报表内行为切面</span><br><span class="line"> * @Author shiyong</span><br><span class="line"> */</span><br><span class="line">@Aspect</span><br><span class="line">@Component</span><br><span class="line">public class LogAspect &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 报表查询操作切点</span><br><span class="line">     */</span><br><span class="line">    @Pointcut(&quot;execution(* com.wisesoft.bigdata.controller.data.*&quot; +</span><br><span class="line">            &quot;Controller.listHtmlDataReport(..))&quot;)</span><br><span class="line">    public void report() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 报表导出操作切点</span><br><span class="line">     */</span><br><span class="line">    @Pointcut(&quot;execution(* com.wisesoft.bigdata.controller.data.*&quot; +</span><br><span class="line">            &quot;Controller.exportExcel(..))&quot;)</span><br><span class="line">    public void export() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 报表统计操作日志</span><br><span class="line">     */</span><br><span class="line">    @Before(&quot;report()&quot;)</span><br><span class="line">    public void reportLog(JoinPoint joinPoint) &#123;</span><br><span class="line">        ReportUserBehaviorVO vo = new ReportUserBehaviorVO();</span><br><span class="line">        vo.setBehavior(&quot;统计&quot;);</span><br><span class="line">        insertReportBehavior(joinPoint, vo);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 报表导出操作日志</span><br><span class="line">     */</span><br><span class="line">    @Before(&quot;export()&quot;)</span><br><span class="line">    public void exportLog(JoinPoint joinPoint) &#123;</span><br><span class="line">        ReportUserBehaviorVO vo = new ReportUserBehaviorVO();</span><br><span class="line">        vo.setBehavior(&quot;导出&quot;);</span><br><span class="line">        insertReportBehavior(joinPoint, vo);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 根据class获取模块名称</span><br><span class="line">     */</span><br><span class="line">    public String getModuleNameByClass(Class c) &#123;</span><br><span class="line">        if (c.isAssignableFrom(MdayagePager.class)) &#123;</span><br><span class="line">            return &quot;游客年龄分布日报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MdaygenderPager.class)) &#123;</span><br><span class="line">            return &quot;游客性别分布日报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MdayhotlinePager.class)) &#123;</span><br><span class="line">            return &quot;热门路线日报表&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MdayovernightPager.class)) &#123;</span><br><span class="line">            return &quot;游客过夜日报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MdaysourcecityPager.class)) &#123;</span><br><span class="line">            return &quot;游客来源城市日报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MdaysourcecountryPager.class)) &#123;</span><br><span class="line">            return &quot;境外游客来源日报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MdaysourceprovincePager.class)) &#123;</span><br><span class="line">            return &quot;游客来源省份日报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MdaystayPager.class)) &#123;</span><br><span class="line">            return &quot;游客驻留日报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthagePager.class)) &#123;</span><br><span class="line">            return &quot;游客年龄分布月报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthgenderPager.class)) &#123;</span><br><span class="line">            return &quot;游客性别分布月报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthhotlinePager.class)) &#123;</span><br><span class="line">            return &quot;热门路线月报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthlocalPager.class)) &#123;</span><br><span class="line">            return &quot;月度游客实时累计&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthovernightPager.class)) &#123;</span><br><span class="line">            return &quot;过夜游客月报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthsourcecityPager.class)) &#123;</span><br><span class="line">            return &quot;游客城市来源月报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthsourcecountryPager.class)) &#123;</span><br><span class="line">            return &quot;境外游客来源月报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthsourceprovincePager.class)) &#123;</span><br><span class="line">            return &quot;游客省份来源月报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthstayPager.class)) &#123;</span><br><span class="line">            return &quot;游客驻留月报&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        return &quot;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 由于统计和导出操作唯一的区别是behavior字段不同，</span><br><span class="line">     * 所以把代码抽出来避免代码重复冗余</span><br><span class="line">     */</span><br><span class="line">    public void insertReportBehavior (JoinPoint joinPoint,ReportUserBehaviorVO vo) &#123;</span><br><span class="line">        Signature signature = joinPoint.getSignature();</span><br><span class="line">        System.out.println(signature.toString());</span><br><span class="line">        Object[] objects = joinPoint.getArgs();</span><br><span class="line">        Class c = objects[0].getClass();</span><br><span class="line">        String countDateStart = null;</span><br><span class="line">        String countDateEnd = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            //利用反射获取不同类的参数值</span><br><span class="line">            Method getCountDateStart = c.getMethod(&quot;getCountDateStart&quot;, null);</span><br><span class="line">            countDateStart = getCountDateStart.invoke(objects[0], null).toString();</span><br><span class="line">            Method getCountDateEnd = c.getMethod(&quot;getCountDateEnd&quot;, null);</span><br><span class="line">            countDateEnd = getCountDateEnd.invoke(objects[0], null).toString();</span><br><span class="line">        &#125; catch (NoSuchMethodException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (InvocationTargetException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        //组装操作详情</span><br><span class="line">        StringBuffer stringBuffer = new StringBuffer();</span><br><span class="line">        stringBuffer.append(&quot;时间段&quot;);</span><br><span class="line">        stringBuffer.append(countDateStart);</span><br><span class="line">        stringBuffer.append(&quot;至&quot;);</span><br><span class="line">        stringBuffer.append(countDateEnd);</span><br><span class="line"></span><br><span class="line">        vo.setId(UuidUtil.uuidStr());</span><br><span class="line">        vo.setUserName(UserSessionContext.getLoginUserName());</span><br><span class="line">        vo.setBrowseTime(new Date());</span><br><span class="line">        vo.setStatisticsDetail(stringBuffer.toString());</span><br><span class="line">        //获取模块名称</span><br><span class="line">        String moduleName = getModuleNameByClass(c);</span><br><span class="line">        vo.setModuleName(moduleName);</span><br><span class="line">        vo.insert();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/14/AOP实例：日志记录/" data-id="cjyjqq7ca0004uq0r6gio0ikc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AOP/">AOP</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/15/spring-boot 搭建记录/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          spring boot 搭建记录
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/12/AOP学习笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">AOP学习笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AOP/">AOP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/API/">API</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot/">springboot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/富文本/">富文本</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AOP/">AOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/APACHE-POI/">APACHE POI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/API/">API</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaSE/">JavaSE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaWeb/">JavaWeb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java基础/">Java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/">MyBatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apiDoc/">apiDoc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freemarker/">freemarker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layUI/">layUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web基础/">web基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单点登陆/">单点登陆</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基本原则/">基本原则</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/容器/">容器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/富文本/">富文本</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AOP/" style="font-size: 15px;">AOP</a> <a href="/tags/APACHE-POI/" style="font-size: 10px;">APACHE POI</a> <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/JavaSE/" style="font-size: 10px;">JavaSE</a> <a href="/tags/JavaWeb/" style="font-size: 20px;">JavaWeb</a> <a href="/tags/Java基础/" style="font-size: 10px;">Java基础</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/apiDoc/" style="font-size: 10px;">apiDoc</a> <a href="/tags/freemarker/" style="font-size: 10px;">freemarker</a> <a href="/tags/layUI/" style="font-size: 10px;">layUI</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/web基础/" style="font-size: 10px;">web基础</a> <a href="/tags/单点登陆/" style="font-size: 10px;">单点登陆</a> <a href="/tags/基本原则/" style="font-size: 10px;">基本原则</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/容器/" style="font-size: 10px;">容器</a> <a href="/tags/富文本/" style="font-size: 10px;">富文本</a> <a href="/tags/消息队列/" style="font-size: 20px;">消息队列</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/05/15/Java反射学习/">Java反射学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/18/面向对象设计基本原则：SOLID/">面向对象设计基本原则：SOLID</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/14/Session-Cookie/">Session &amp; Cookie</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/25/多线程学习/">多线程学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/18/rabbitmq-websocket实现消息推送/">rabbitmq+websocket实现消息推送</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

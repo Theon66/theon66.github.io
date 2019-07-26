@@ -5,15 +5,20 @@
   
 
   
-  <title>Archives | Hexo</title>
+  <title>ueditor插件上传配置 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="依赖jar包引入要使用上传功能，除了要引入常见的js和css之外，还需要引入ueditor-1.1.2.jar，这个可以在官网下载的压缩包里找到，在jsp/lib下。 因为项目使用的maven，而中央仓库里找不到这个包，如果在自己的本地仓库中加入，那么别的同事拉取了你的代码后，就会在项目中找不到这个包。一种可行的办法是把包加到公司的maven私服中，还有一种方法就是直接把jar包放在项目中的web">
+<meta name="keywords" content="富文本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ueditor插件上传配置">
+<meta property="og:url" content="http://yoursite.com/2018/09/11/ueditor插件上传配置/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="依赖jar包引入要使用上传功能，除了要引入常见的js和css之外，还需要引入ueditor-1.1.2.jar，这个可以在官网下载的压缩包里找到，在jsp/lib下。 因为项目使用的maven，而中央仓库里找不到这个包，如果在自己的本地仓库中加入，那么别的同事拉取了你的代码后，就会在项目中找不到这个包。一种可行的办法是把包加到公司的maven私服中，还有一种方法就是直接把jar包放在项目中的web">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-11T06:36:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="ueditor插件上传配置">
+<meta name="twitter:description" content="依赖jar包引入要使用上传功能，除了要引入常见的js和css之外，还需要引入ueditor-1.1.2.jar，这个可以在官网下载的压缩包里找到，在jsp/lib下。 因为项目使用的maven，而中央仓库里找不到这个包，如果在自己的本地仓库中加入，那么别的同事拉取了你的代码后，就会在项目中找不到这个包。一种可行的办法是把包加到公司的maven私服中，还有一种方法就是直接把jar包放在项目中的web">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,226 +65,77 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/05/15/Java反射学习/" class="archive-article-date">
-  <time datetime="2019-05-15T02:41:59.000Z" itemprop="datePublished">May 15</time>
+        <section id="main"><article id="post-ueditor插件上传配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/11/ueditor插件上传配置/" class="article-date">
+  <time datetime="2018-09-11T06:15:53.000Z" itemprop="datePublished">2018-09-11</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/富文本/">富文本</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/15/Java反射学习/">Java反射学习</a>
+    <h1 class="article-title" itemprop="name">
+      ueditor插件上传配置
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="依赖jar包引入"><a href="#依赖jar包引入" class="headerlink" title="依赖jar包引入"></a>依赖jar包引入</h1><p>要使用上传功能，除了要引入常见的js和css之外，还需要引入ueditor-1.1.2.jar，这个可以在官网下载的压缩包里找到，在jsp/lib下。</p>
+<p>因为项目使用的maven，而中央仓库里找不到这个包，如果在自己的本地仓库中加入，那么别的同事拉取了你的代码后，就会在项目中找不到这个包。一种可行的办法是把包加到公司的maven私服中，还有一种方法就是直接把jar包放在项目中的webapp/WEB-INF/lib下。然后POM.xml中这样配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baidu<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>ueditor<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">scope</span>&gt;</span>system<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">systemPath</span>&gt;</span></span><br><span class="line">		$&#123;project.basedir&#125;/src/main/webapp/WEB-INF/lib/ueditor-1.1.2.jar</span><br><span class="line">	<span class="tag">&lt;/<span class="name">systemPath</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样maven就可以在项目中找到这个jar包.</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>我在完成了上面的步骤后就测试了一下附件上传的功能,网上说默认的文件上传位置在/ueditor/jsp/upload里面。虽然界面上显示上传成功，但我并没有在这个文件里找到我上传的东西。后来发现这是因为我像个傻逼一样在项目的源代码中找，而不是在编译后的target中找。</p>
+<p>现在可以上传成功，但是在页面上点击附件还显示404，是因为访问文件的路径没有配置。<br>ueditor/jsp/config.json</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/* 上传文件配置 */</span><br><span class="line">    "fileActionName": "uploadfile", /* controller里,执行上传视频的action名称 */</span><br><span class="line">    "fileFieldName": "upfile", /* 提交的文件表单名称 */</span><br><span class="line">    "filePathFormat": "/ueditor/jsp/upload/file/&#123;yyyy&#125;&#123;mm&#125;&#123;dd&#125;/&#123;time&#125;&#123;rand:6&#125;", /* 上传保存路径,可以自定义保存路径和文件名格式 */</span><br><span class="line">    "fileUrlPrefix": "/callcenter", /* 文件访问路径前缀 */</span><br><span class="line">    "fileMaxSize": 51200000, /* 上传大小限制，单位B，默认50MB */</span><br><span class="line">    "fileAllowFiles": [</span><br><span class="line">        ".png", ".jpg", ".jpeg", ".gif", ".bmp",</span><br><span class="line">        ".flv", ".swf", ".mkv", ".avi", ".rm", ".rmvb", ".mpeg", ".mpg",</span><br><span class="line">        ".ogg", ".ogv", ".mov", ".wmv", ".mp4", ".webm", ".mp3", ".wav", ".mid",</span><br><span class="line">        ".rar", ".zip", ".tar", ".gz", ".7z", ".bz2", ".cab", ".iso",</span><br><span class="line">        ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".pdf", ".txt", ".md", ".xml"</span><br><span class="line">    ], /* 上传文件格式显示 */</span><br></pre></td></tr></table></figure>
+
+<p>找到这一段配置，在fileUrlPrefix这一项配置正确的项目名称即可</p>
+<h1 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h1><p>还可以自定义上传的controller方法，以后用到再写吧</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/11/ueditor插件上传配置/" data-id="cjyjqq7cr000vuq0rpw8lwlgb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/富文本/">富文本</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/21/异步上传文件/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          异步上传文件
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/03/多文件上传接口实现/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">多文件上传接口实现</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/18/面向对象设计基本原则：SOLID/" class="archive-article-date">
-  <time datetime="2019-03-18T00:51:56.000Z" itemprop="datePublished">Mar 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/18/面向对象设计基本原则：SOLID/">面向对象设计基本原则：SOLID</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/14/Session-Cookie/" class="archive-article-date">
-  <time datetime="2019-03-14T08:32:21.000Z" itemprop="datePublished">Mar 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/14/Session-Cookie/">Session &amp; Cookie</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/02/25/多线程学习/" class="archive-article-date">
-  <time datetime="2019-02-25T08:18:07.000Z" itemprop="datePublished">Feb 25</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/25/多线程学习/">多线程学习</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/18/rabbitmq-websocket实现消息推送/" class="archive-article-date">
-  <time datetime="2019-01-18T03:26:19.000Z" itemprop="datePublished">Jan 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/18/rabbitmq-websocket实现消息推送/">rabbitmq+websocket实现消息推送</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/03/layUI-laypage分页实现/" class="archive-article-date">
-  <time datetime="2019-01-03T06:53:08.000Z" itemprop="datePublished">Jan 3</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/03/layUI-laypage分页实现/">layUI laypage分页实现</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/28/apiDoc基本使用/" class="archive-article-date">
-  <time datetime="2018-12-28T03:02:10.000Z" itemprop="datePublished">Dec 28</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/28/apiDoc基本使用/">apiDoc基本使用</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/21/MyBatis批量更新写法/" class="archive-article-date">
-  <time datetime="2018-12-21T01:57:42.000Z" itemprop="datePublished">Dec 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/21/MyBatis批量更新写法/">MyBatis批量更新写法</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/14/MySQL用word方式导出表结构/" class="archive-article-date">
-  <time datetime="2018-12-14T08:02:07.000Z" itemprop="datePublished">Dec 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/14/MySQL用word方式导出表结构/">MySQL用word方式导出表结构</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/09/Maven学习/" class="archive-article-date">
-  <time datetime="2018-12-09T03:07:19.000Z" itemprop="datePublished">Dec 9</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/09/Maven学习/">Maven学习</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-  </nav>
 
 </section>
         

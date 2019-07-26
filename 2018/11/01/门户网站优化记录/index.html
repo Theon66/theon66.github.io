@@ -5,15 +5,20 @@
   
 
   
-  <title>Archives | Hexo</title>
+  <title>门户网站优化记录 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="背景最近优化了公司的门户网站，由于首页十分臃肿，有大量的图片和Echart地图的内容。从一开始完全加载完毕需要2分钟以上，优化到只要7s左右，记录一下都用了哪些方法来优化网站。 处理图片压缩图片是最直接也是最有效的方法，在带宽不变的情况下，资源越大，网站加载时间也就越长。而未经处理和压缩的图片经常大的吓人。  把PNG的图片转换为jpg通常可以缩小很多体积。（这里我不太确定jpg是不是就是最理想的">
+<meta name="keywords" content="JavaWeb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="门户网站优化记录">
+<meta property="og:url" content="http://yoursite.com/2018/11/01/门户网站优化记录/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="背景最近优化了公司的门户网站，由于首页十分臃肿，有大量的图片和Echart地图的内容。从一开始完全加载完毕需要2分钟以上，优化到只要7s左右，记录一下都用了哪些方法来优化网站。 处理图片压缩图片是最直接也是最有效的方法，在带宽不变的情况下，资源越大，网站加载时间也就越长。而未经处理和压缩的图片经常大的吓人。  把PNG的图片转换为jpg通常可以缩小很多体积。（这里我不太确定jpg是不是就是最理想的">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-02T02:29:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="门户网站优化记录">
+<meta name="twitter:description" content="背景最近优化了公司的门户网站，由于首页十分臃肿，有大量的图片和Echart地图的内容。从一开始完全加载完毕需要2分钟以上，优化到只要7s左右，记录一下都用了哪些方法来优化网站。 处理图片压缩图片是最直接也是最有效的方法，在带宽不变的情况下，资源越大，网站加载时间也就越长。而未经处理和压缩的图片经常大的吓人。  把PNG的图片转换为jpg通常可以缩小很多体积。（这里我不太确定jpg是不是就是最理想的">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,226 +65,83 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/05/15/Java反射学习/" class="archive-article-date">
-  <time datetime="2019-05-15T02:41:59.000Z" itemprop="datePublished">May 15</time>
+        <section id="main"><article id="post-门户网站优化记录" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/01/门户网站优化记录/" class="article-date">
+  <time datetime="2018-11-01T07:16:14.000Z" itemprop="datePublished">2018-11-01</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/15/Java反射学习/">Java反射学习</a>
+    <h1 class="article-title" itemprop="name">
+      门户网站优化记录
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近优化了公司的门户网站，由于首页十分臃肿，有大量的图片和Echart地图的内容。从一开始完全加载完毕需要2分钟以上，优化到只要7s左右，记录一下都用了哪些方法来优化网站。</p>
+<h1 id="处理图片"><a href="#处理图片" class="headerlink" title="处理图片"></a>处理图片</h1><p>压缩图片是最直接也是最有效的方法，在带宽不变的情况下，资源越大，网站加载时间也就越长。而未经处理和压缩的图片经常大的吓人。</p>
+<ol>
+<li>把PNG的图片转换为jpg通常可以缩小很多体积。（这里我不太确定jpg是不是就是最理想的图片类型）</li>
+<li>使用nginx图片过滤模块，重置图片尺寸，这样可以保证网页上图片显示的实际大小与请求的图片大小相同，如果请求的图片尺寸太大（大于页面上显示），则等于浪费了带宽。还可以避免存储多个尺寸的同一张图片。要注意的是此方法不适合并大量较大的网站，因为nginx在处理图片时会消耗服务器资源，量过大的时候会增加服务器负担。</li>
+<li>使用懒加载，用了一个叫lozad的js插件，只加载可视范围内的图片。</li>
+</ol>
+<h1 id="压缩js、css等静态资源"><a href="#压缩js、css等静态资源" class="headerlink" title="压缩js、css等静态资源"></a>压缩js、css等静态资源</h1><ul>
+<li>启用nginx的Gzip功能，可以大幅压缩静态文件的体积，减少网页传输的时间。</li>
+</ul>
+<h1 id="提高带宽"><a href="#提高带宽" class="headerlink" title="提高带宽"></a>提高带宽</h1><p>这是最简单粗暴有效的办法，有钱就行。</p>
+<h1 id="使用jsp-静态页面-ajax？"><a href="#使用jsp-静态页面-ajax？" class="headerlink" title="使用jsp/静态页面/ajax？"></a>使用jsp/静态页面/ajax？</h1><ul>
+<li>ajax： 网站本来大部分内容都是使用ajax加载的，个人认为ajax并不适合门户网站这种变动较小的网站，而且使用ajax无法使用lozad进行懒加载，而且ajax加载的内容无法被百度等搜索引擎所抓取，导致用户搜索不到。</li>
+<li>jsp：使用传统的mvc模式，我这次就是用的jsp，因为改起来比较容易，而且没有ajax上面所说的缺点。</li>
+<li>静态页面：在每次后台上传新的文章后，使用模板引擎生成静态页面，用户直接访问静态页面。显然这是最好的办法，更快的访问速度，使用服务器资源最少。</li>
+</ul>
+<h1 id="合并多个js，css文件"><a href="#合并多个js，css文件" class="headerlink" title="合并多个js，css文件"></a>合并多个js，css文件</h1><p>理论上来说，请求多个js文件所花时间会大于单个js，但我实际合并过后，不知为何网站加载时间没有缩短，反而还稍微有增加。但从几个测速网站来看，单个js确实好于多个js。这里的原因暂时还不清楚。</p>
+<h1 id="一些其他有用的东西"><a href="#一些其他有用的东西" class="headerlink" title="一些其他有用的东西"></a>一些其他有用的东西</h1><ol>
+<li><a href="https://developers.google.com/speed/pagespeed/insights/?hl=zh-CN" target="_blank" rel="noopener">Google Pagespeed Insights</a>, 这个谷歌产品可以帮你分析网站，给你优化网站的建议。</li>
+<li>Pagespeed，此工具可以集成到apache或nginx中，可以自动帮你进行网站优化，据说效果非常好，虽然我自己没有用，因为我已经手动做了大部分的工作。但这个东西有一个缺点，似乎会占用不少的服务器cpu资源。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/01/门户网站优化记录/" data-id="cjyjqq7d3001luq0rbiba29lp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaWeb/">JavaWeb</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/12/景区网站学习记录/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          景区网站学习记录
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/10/24/使用nginx优化网站访问速度/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">使用nginx优化网站访问速度</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/18/面向对象设计基本原则：SOLID/" class="archive-article-date">
-  <time datetime="2019-03-18T00:51:56.000Z" itemprop="datePublished">Mar 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/18/面向对象设计基本原则：SOLID/">面向对象设计基本原则：SOLID</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/14/Session-Cookie/" class="archive-article-date">
-  <time datetime="2019-03-14T08:32:21.000Z" itemprop="datePublished">Mar 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/14/Session-Cookie/">Session &amp; Cookie</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/02/25/多线程学习/" class="archive-article-date">
-  <time datetime="2019-02-25T08:18:07.000Z" itemprop="datePublished">Feb 25</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/25/多线程学习/">多线程学习</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/18/rabbitmq-websocket实现消息推送/" class="archive-article-date">
-  <time datetime="2019-01-18T03:26:19.000Z" itemprop="datePublished">Jan 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/18/rabbitmq-websocket实现消息推送/">rabbitmq+websocket实现消息推送</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/03/layUI-laypage分页实现/" class="archive-article-date">
-  <time datetime="2019-01-03T06:53:08.000Z" itemprop="datePublished">Jan 3</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/03/layUI-laypage分页实现/">layUI laypage分页实现</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/28/apiDoc基本使用/" class="archive-article-date">
-  <time datetime="2018-12-28T03:02:10.000Z" itemprop="datePublished">Dec 28</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/28/apiDoc基本使用/">apiDoc基本使用</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/21/MyBatis批量更新写法/" class="archive-article-date">
-  <time datetime="2018-12-21T01:57:42.000Z" itemprop="datePublished">Dec 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/21/MyBatis批量更新写法/">MyBatis批量更新写法</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/14/MySQL用word方式导出表结构/" class="archive-article-date">
-  <time datetime="2018-12-14T08:02:07.000Z" itemprop="datePublished">Dec 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/14/MySQL用word方式导出表结构/">MySQL用word方式导出表结构</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/09/Maven学习/" class="archive-article-date">
-  <time datetime="2018-12-09T03:07:19.000Z" itemprop="datePublished">Dec 9</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/09/Maven学习/">Maven学习</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-  </nav>
 
 </section>
         

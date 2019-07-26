@@ -5,15 +5,20 @@
   
 
   
-  <title>Archives | Hexo</title>
+  <title>MyBatis批量更新写法 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="1234567891011121314151617181920212223242526272829303132&amp;lt;update id=&quot;updateThisMonthBatch&quot; parameterType=&quot;java.util.List&quot;&amp;gt;        UPDATE crew_scheduling        SET plan_name = CASE title        &amp;l">
+<meta name="keywords" content="MyBatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis批量更新写法">
+<meta property="og:url" content="http://yoursite.com/2018/12/21/MyBatis批量更新写法/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132&amp;lt;update id=&quot;updateThisMonthBatch&quot; parameterType=&quot;java.util.List&quot;&amp;gt;        UPDATE crew_scheduling        SET plan_name = CASE title        &amp;l">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-21T08:36:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="MyBatis批量更新写法">
+<meta name="twitter:description" content="1234567891011121314151617181920212223242526272829303132&amp;lt;update id=&quot;updateThisMonthBatch&quot; parameterType=&quot;java.util.List&quot;&amp;gt;        UPDATE crew_scheduling        SET plan_name = CASE title        &amp;l">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,226 +65,67 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/05/15/Java反射学习/" class="archive-article-date">
-  <time datetime="2019-05-15T02:41:59.000Z" itemprop="datePublished">May 15</time>
+        <section id="main"><article id="post-MyBatis批量更新写法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/21/MyBatis批量更新写法/" class="article-date">
+  <time datetime="2018-12-21T01:57:42.000Z" itemprop="datePublished">2018-12-21</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/15/Java反射学习/">Java反射学习</a>
+    <h1 class="article-title" itemprop="name">
+      MyBatis批量更新写法
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;update id="updateThisMonthBatch" parameterType="java.util.List"&gt;</span><br><span class="line">        <span class="keyword">UPDATE</span> crew_scheduling</span><br><span class="line">        <span class="keyword">SET</span> plan_name = <span class="keyword">CASE</span> title</span><br><span class="line">        &lt;foreach collection=<span class="string">"list"</span> item=<span class="string">"entity"</span>&gt;</span><br><span class="line">          &lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"entity.planName == null"</span>&gt;</span><br><span class="line">              <span class="keyword">WHEN</span> <span class="comment">#&#123;entity.title&#125; THEN crew_scheduling.plan_name</span></span><br><span class="line">          &lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">          &lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"entity.planName != null"</span>&gt;</span><br><span class="line">              <span class="keyword">WHEN</span> <span class="comment">#&#123;entity.title&#125; THEN #&#123;entity.planName&#125;</span></span><br><span class="line">          &lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">        &lt;/foreach&gt;</span><br><span class="line">        <span class="keyword">END</span> , plan_status = <span class="keyword">CASE</span> title</span><br><span class="line">        &lt;foreach collection=<span class="string">"list"</span> item=<span class="string">"entity"</span>&gt;</span><br><span class="line">            &lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"entity.planStatus == null"</span>&gt;</span><br><span class="line">                <span class="keyword">WHEN</span> <span class="comment">#&#123;entity.title&#125; THEN crew_scheduling.plan_status</span></span><br><span class="line">            &lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">            &lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"entity.planStatus != null"</span>&gt;</span><br><span class="line">                <span class="keyword">WHEN</span> <span class="comment">#&#123;entity.title&#125; THEN #&#123;entity.planStatus&#125;</span></span><br><span class="line">            &lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">        &lt;/foreach&gt;</span><br><span class="line">        <span class="keyword">END</span> , car_num = <span class="keyword">CASE</span> title</span><br><span class="line">        &lt;foreach collection=<span class="string">"list"</span> item=<span class="string">"entity"</span>&gt;</span><br><span class="line">            &lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"entity.carNum == null"</span>&gt;</span><br><span class="line">                <span class="keyword">WHEN</span> <span class="comment">#&#123;entity.title&#125; THEN crew_scheduling.car_num</span></span><br><span class="line">            &lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">            &lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"entity.carNum != null"</span>&gt;</span><br><span class="line">                <span class="keyword">WHEN</span> <span class="comment">#&#123;entity.title&#125; THEN #&#123;entity.carNum&#125;</span></span><br><span class="line">            &lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">        &lt;/foreach&gt;</span><br><span class="line">        <span class="keyword">END</span></span><br><span class="line">        <span class="keyword">WHERE</span> <span class="keyword">DATE_FORMAT</span>(create_time,<span class="string">'%Y-%m'</span>) = <span class="keyword">DATE_FORMAT</span>(<span class="keyword">NOW</span>(),<span class="string">'%Y-%m'</span>)</span><br><span class="line">    &lt;/<span class="keyword">update</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>以上代码的作用为批量更新本月数据，主要使用了</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> 字段名 = <span class="keyword">CASE</span> <span class="keyword">WHEN</span> 字段值 <span class="keyword">THEN</span> 新字段值 <span class="keyword">CASE</span> <span class="keyword">WHEN</span> 字段值 <span class="keyword">THEN</span> 新字段值......</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/21/MyBatis批量更新写法/" data-id="cjyjqq7cf000auq0rte027wk2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MyBatis/">MyBatis</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/28/apiDoc基本使用/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          apiDoc基本使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/14/MySQL用word方式导出表结构/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">MySQL用word方式导出表结构</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/18/面向对象设计基本原则：SOLID/" class="archive-article-date">
-  <time datetime="2019-03-18T00:51:56.000Z" itemprop="datePublished">Mar 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/18/面向对象设计基本原则：SOLID/">面向对象设计基本原则：SOLID</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/14/Session-Cookie/" class="archive-article-date">
-  <time datetime="2019-03-14T08:32:21.000Z" itemprop="datePublished">Mar 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/14/Session-Cookie/">Session &amp; Cookie</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/02/25/多线程学习/" class="archive-article-date">
-  <time datetime="2019-02-25T08:18:07.000Z" itemprop="datePublished">Feb 25</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/25/多线程学习/">多线程学习</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/18/rabbitmq-websocket实现消息推送/" class="archive-article-date">
-  <time datetime="2019-01-18T03:26:19.000Z" itemprop="datePublished">Jan 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/18/rabbitmq-websocket实现消息推送/">rabbitmq+websocket实现消息推送</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/03/layUI-laypage分页实现/" class="archive-article-date">
-  <time datetime="2019-01-03T06:53:08.000Z" itemprop="datePublished">Jan 3</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/03/layUI-laypage分页实现/">layUI laypage分页实现</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/28/apiDoc基本使用/" class="archive-article-date">
-  <time datetime="2018-12-28T03:02:10.000Z" itemprop="datePublished">Dec 28</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/28/apiDoc基本使用/">apiDoc基本使用</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/21/MyBatis批量更新写法/" class="archive-article-date">
-  <time datetime="2018-12-21T01:57:42.000Z" itemprop="datePublished">Dec 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/21/MyBatis批量更新写法/">MyBatis批量更新写法</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/14/MySQL用word方式导出表结构/" class="archive-article-date">
-  <time datetime="2018-12-14T08:02:07.000Z" itemprop="datePublished">Dec 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/14/MySQL用word方式导出表结构/">MySQL用word方式导出表结构</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/09/Maven学习/" class="archive-article-date">
-  <time datetime="2018-12-09T03:07:19.000Z" itemprop="datePublished">Dec 9</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/09/Maven学习/">Maven学习</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-  </nav>
 
 </section>
         

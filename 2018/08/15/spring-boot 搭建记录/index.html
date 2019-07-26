@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>spring boot 搭建记录 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="使用spring initializr生成项目基本结构这里IDE使用idea，在创建新项目/模块的时候，选择spring initializr，根据自己的需求选择依赖，我这里因为要搭建web项目，所以选择web和模板引擎thymeleaf。 Hello World现在编写一个controller和index.html看能否成功访问 index.java 12345678@Controllerpub">
+<meta name="keywords" content="springboot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring boot 搭建记录">
+<meta property="og:url" content="http://yoursite.com/2018/08/15/spring-boot 搭建记录/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="使用spring initializr生成项目基本结构这里IDE使用idea，在创建新项目/模块的时候，选择spring initializr，根据自己的需求选择依赖，我这里因为要搭建web项目，所以选择web和模板引擎thymeleaf。 Hello World现在编写一个controller和index.html看能否成功访问 index.java 12345678@Controllerpub">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-21T07:37:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring boot 搭建记录">
+<meta name="twitter:description" content="使用spring initializr生成项目基本结构这里IDE使用idea，在创建新项目/模块的时候，选择spring initializr，根据自己的需求选择依赖，我这里因为要搭建web项目，所以选择web和模板引擎thymeleaf。 Hello World现在编写一个controller和index.html看能否成功访问 index.java 12345678@Controllerpub">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-spring-boot 搭建记录" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/15/spring-boot 搭建记录/" class="article-date">
+  <time datetime="2018-08-15T03:26:13.000Z" itemprop="datePublished">2018-08-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/springboot/">springboot</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      spring boot 搭建记录
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="使用spring-initializr生成项目基本结构"><a href="#使用spring-initializr生成项目基本结构" class="headerlink" title="使用spring initializr生成项目基本结构"></a>使用spring initializr生成项目基本结构</h1><p>这里IDE使用idea，在创建新项目/模块的时候，选择spring initializr，根据自己的需求选择依赖，我这里因为要搭建web项目，所以选择web和模板引擎thymeleaf。</p>
+<h1 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h1><p>现在编写一个controller和index.html看能否成功访问</p>
+<p>index.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Controller</span><br><span class="line">public class Index &#123;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(&quot;/&quot;)</span><br><span class="line">    public String index() &#123;</span><br><span class="line">        return &quot;index&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>index.html放在resources/templates下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;html lang=&quot;en&quot; xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;index&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    Hello World</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>此时访问localhost:8080即可看到效果</p>
+<h1 id="整合MyBatis"><a href="#整合MyBatis" class="headerlink" title="整合MyBatis"></a>整合MyBatis</h1><p><a href="http://www.mybatis.org/mybatis-3/zh/index.html" target="_blank" rel="noopener">官方网站</a></p>
+<h2 id="注解版本"><a href="#注解版本" class="headerlink" title="注解版本"></a>注解版本</h2><h3 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;</span><br><span class="line">  	&lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">  	&lt;version&gt;1.1.1&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置数据源和bean扫描"><a href="#配置数据源和bean扫描" class="headerlink" title="配置数据源和bean扫描"></a>配置数据源和bean扫描</h3><p>applicatioin.properties</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">spring.datasource.url=jdbc:mysql://localhost:3306/test?characterEncoding=utf8</span><br><span class="line">spring.datasource.username=root</span><br><span class="line">spring.datasource.password=root</span><br><span class="line">spring.datasource.driverClassName=com.mysql.jdbc.Driver</span><br><span class="line"></span><br><span class="line">mybatis.type-aliases-package=com.theon.example.bean</span><br></pre></td></tr></table></figure>
+
+<h3 id="编写bean和mapper"><a href="#编写bean和mapper" class="headerlink" title="编写bean和mapper"></a>编写bean和mapper</h3><p>bean省略</p>
+<p>mapper</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public interface NorseMythologyGodMapper &#123;</span><br><span class="line"></span><br><span class="line">    @Insert(&quot;insert into norse_mythology_god(id, specie, alias, god_name, &quot; +</span><br><span class="line">            &quot;weapon, mount) values(#&#123;id&#125;, #&#123;specie&#125;,  #&#123;alias&#125;, #&#123;godName&#125;, &quot; +</span><br><span class="line">            &quot;#&#123;weapon&#125;, #&#123;mount&#125;) &quot;)</span><br><span class="line">    public int insert(NorseMythologyGod norseMythologyGod);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@RunWith(SpringRunner.class)</span><br><span class="line">@SpringBootTest</span><br><span class="line">@MapperScan(&quot;com.theon.example.mapper&quot;)</span><br><span class="line">public class ExampleApplicationTests &#123;</span><br><span class="line"></span><br><span class="line">	@Autowired</span><br><span class="line">	NorseMythologyGodMapper norseMythologyGodMapper;</span><br><span class="line"></span><br><span class="line">	@Test</span><br><span class="line">	public void contextLoads() &#123;</span><br><span class="line">		NorseMythologyGod thor = new NorseMythologyGod();</span><br><span class="line">		thor.setAlias(&quot;god of thunder&quot;);</span><br><span class="line">		thor.setGodName(&quot;Thor&quot;);</span><br><span class="line">		thor.setWeapon(&quot;hammer&quot;);</span><br><span class="line">		thor.setSpecie(&quot;Asgard&quot;);</span><br><span class="line">		norseMythologyGodMapper.insert(thor);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是,使用@MapperScan扫描mapper</p>
+<h2 id="XML版本"><a href="#XML版本" class="headerlink" title="XML版本"></a>XML版本</h2><p>注解形式不适合复杂的sql语句，会难以维护</p>
+<h3 id="在apllication-properties中添加xml位置"><a href="#在apllication-properties中添加xml位置" class="headerlink" title="在apllication.properties中添加xml位置"></a>在apllication.properties中添加xml位置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mybatis.mapper-locations=classpath:mybatis/*.xml</span><br></pre></td></tr></table></figure>
+
+<h3 id="在NorseMythologyGod中添加接口"><a href="#在NorseMythologyGod中添加接口" class="headerlink" title="在NorseMythologyGod中添加接口"></a>在NorseMythologyGod中添加接口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public NorseMythologyGod findByName(String godName);</span><br></pre></td></tr></table></figure>
+
+<h3 id="编写sql的xml文件"><a href="#编写sql的xml文件" class="headerlink" title="编写sql的xml文件"></a>编写sql的xml文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot; &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot; &gt;</span><br><span class="line">&lt;mapper namespace=&quot;com.theon.example.mapper.NorseMythologyGodMapper&quot;&gt;</span><br><span class="line">    &lt;!--实体类映射--&gt;</span><br><span class="line">    &lt;resultMap id=&quot;norseMythologyGodMap&quot; type=&quot;com.theon.example.bean.NorseMythologyGod&quot;&gt;</span><br><span class="line">        &lt;id column=&quot;id&quot; property=&quot;id&quot; jdbcType=&quot;INTEGER&quot; /&gt;</span><br><span class="line">        &lt;result column=&quot;specie&quot; property=&quot;specie&quot; jdbcType=&quot;VARCHAR&quot; /&gt;</span><br><span class="line">        &lt;result column=&quot;alias&quot; property=&quot;alias&quot; jdbcType=&quot;VARCHAR&quot; /&gt;</span><br><span class="line">        &lt;result column=&quot;god_name&quot; property=&quot;godName&quot; jdbcType=&quot;VARCHAR&quot; /&gt;</span><br><span class="line">        &lt;result column=&quot;weapon&quot; property=&quot;weapon&quot; jdbcType=&quot;VARCHAR&quot; /&gt;</span><br><span class="line">        &lt;result column=&quot;mount&quot; property=&quot;mount&quot; jdbcType=&quot;VARCHAR&quot; /&gt;</span><br><span class="line">    &lt;/resultMap&gt;</span><br><span class="line"></span><br><span class="line">    &lt;select id=&quot;findByName&quot; resultMap=&quot;norseMythologyGodMap&quot; parameterType=&quot;java.lang.String&quot;&gt;</span><br><span class="line">        select</span><br><span class="line">            id, specie, alias, god_name, weapon, mount</span><br><span class="line">        from norse_mythology_god</span><br><span class="line">           where god_name = #&#123;godName&#125;</span><br><span class="line">    &lt;/select&gt;</span><br><span class="line">&lt;/mapper&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试xml版本代码"><a href="#测试xml版本代码" class="headerlink" title="测试xml版本代码"></a>测试xml版本代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NorseMythologyGod god = norseMythologyGodMapper.findByName(&quot;Thor&quot;);</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/15/spring-boot 搭建记录/" data-id="cjyjqq7cq000ruq0rngiu07aj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/03/多文件上传接口实现/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          多文件上传接口实现
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/14/AOP实例：日志记录/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">AOP实例：日志记录</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AOP/">AOP</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/API/">API</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/springboot/">springboot</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/富文本/">富文本</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AOP/">AOP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/APACHE-POI/">APACHE POI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/API/">API</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaSE/">JavaSE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaWeb/">JavaWeb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java基础/">Java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Maven/">Maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MyBatis/">MyBatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apiDoc/">apiDoc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/freemarker/">freemarker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layUI/">layUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web基础/">web基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/单点登陆/">单点登陆</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基本原则/">基本原则</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/多线程/">多线程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/容器/">容器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/富文本/">富文本</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息队列/">消息队列</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AOP/" style="font-size: 15px;">AOP</a> <a href="/tags/APACHE-POI/" style="font-size: 10px;">APACHE POI</a> <a href="/tags/API/" style="font-size: 10px;">API</a> <a href="/tags/JavaSE/" style="font-size: 10px;">JavaSE</a> <a href="/tags/JavaWeb/" style="font-size: 20px;">JavaWeb</a> <a href="/tags/Java基础/" style="font-size: 10px;">Java基础</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/apiDoc/" style="font-size: 10px;">apiDoc</a> <a href="/tags/freemarker/" style="font-size: 10px;">freemarker</a> <a href="/tags/layUI/" style="font-size: 10px;">layUI</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/web基础/" style="font-size: 10px;">web基础</a> <a href="/tags/单点登陆/" style="font-size: 10px;">单点登陆</a> <a href="/tags/基本原则/" style="font-size: 10px;">基本原则</a> <a href="/tags/多线程/" style="font-size: 10px;">多线程</a> <a href="/tags/容器/" style="font-size: 10px;">容器</a> <a href="/tags/富文本/" style="font-size: 10px;">富文本</a> <a href="/tags/消息队列/" style="font-size: 20px;">消息队列</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/05/15/Java反射学习/">Java反射学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/18/面向对象设计基本原则：SOLID/">面向对象设计基本原则：SOLID</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/14/Session-Cookie/">Session &amp; Cookie</a>
+          </li>
+        
+          <li>
+            <a href="/2019/02/25/多线程学习/">多线程学习</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/18/rabbitmq-websocket实现消息推送/">rabbitmq+websocket实现消息推送</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

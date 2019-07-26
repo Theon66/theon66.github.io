@@ -5,15 +5,19 @@
   
 
   
-  <title>Archives | Hexo</title>
+  <title>异步上传文件 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="以前异步上传文件一直使用ajaxfileupload.js,这个插件在github上有很多很多的版本，似乎没有人维护了，也找不到一个文档，在使用过程中经常会出问题，有时候甚至需要去修改源码。于是就去寻找别的办法，结果还真找到了。 其实使用jquery ajax就可以实现功能，何必还要用插件呢。 实现在onchange里绑定上传方法,这样只要选择文件就可以触发方法 1&amp;lt;input type=&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="异步上传文件">
+<meta property="og:url" content="http://yoursite.com/2018/09/21/异步上传文件/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="以前异步上传文件一直使用ajaxfileupload.js,这个插件在github上有很多很多的版本，似乎没有人维护了，也找不到一个文档，在使用过程中经常会出问题，有时候甚至需要去修改源码。于是就去寻找别的办法，结果还真找到了。 其实使用jquery ajax就可以实现功能，何必还要用插件呢。 实现在onchange里绑定上传方法,这样只要选择文件就可以触发方法 1&amp;lt;input type=&amp;">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-21T06:54:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="异步上传文件">
+<meta name="twitter:description" content="以前异步上传文件一直使用ajaxfileupload.js,这个插件在github上有很多很多的版本，似乎没有人维护了，也找不到一个文档，在使用过程中经常会出问题，有时候甚至需要去修改源码。于是就去寻找别的办法，结果还真找到了。 其实使用jquery ajax就可以实现功能，何必还要用插件呢。 实现在onchange里绑定上传方法,这样只要选择文件就可以触发方法 1&amp;lt;input type=&amp;">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,226 +64,73 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/05/15/Java反射学习/" class="archive-article-date">
-  <time datetime="2019-05-15T02:41:59.000Z" itemprop="datePublished">May 15</time>
+        <section id="main"><article id="post-异步上传文件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/21/异步上传文件/" class="article-date">
+  <time datetime="2018-09-21T03:24:09.000Z" itemprop="datePublished">2018-09-21</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/15/Java反射学习/">Java反射学习</a>
+    <h1 class="article-title" itemprop="name">
+      异步上传文件
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>以前异步上传文件一直使用ajaxfileupload.js,这个插件在github上有很多很多的版本，似乎没有人维护了，也找不到一个文档，在使用过程中经常会出问题，有时候甚至需要去修改源码。于是就去寻找别的办法，结果还真找到了。</p>
+<p>其实使用jquery ajax就可以实现功能，何必还要用插件呢。</p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>在onchange里绑定上传方法,这样只要选择文件就可以触发方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=&quot;file&quot; id=&quot;file&quot; name=&quot;file&quot;  onchange=&quot;imageUpload()&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>上传方法中,使用到了一个叫<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/FormData/Using_FormData_Objects" target="_blank" rel="noopener">FormData</a>的对象来承载file数据.然后使用jquery ajax来访问上传接口.</p>
+<p>解释一下processData和contentType</p>
+<blockquote>
+<p><strong>processData</strong> (默认: true)<br>类型: Boolean<br>默认情况下，通过data选项传递进来的数据，如果是一个对象(技术上讲只要不是字符串)，都会处理转化成一个查询字符串，以配合默认内容类型 <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/POST" target="_blank" rel="noopener">“application/x-www-form-urlencoded”</a>。如果要发送 DOM 树信息或其它不希望转换的信息，请设置为 false。<br><strong>contentType</strong> (默认: ‘application/x-www-form-urlencoded; charset=UTF-8’)<br>类型: String<br>发送信息至服务器时内容编码类型。默认值是”application/x-www-form-urlencoded; charset=UTF-8”，适合大多数情况。如果你明确地传递了一个内容类型（Content-Type）给 $.ajax()，那么他必定会发送给服务器（即使没有数据要发送）。数据将总是使用UTF-8字符集传递给服务器；你必须在服务器端进行适当的解码。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function imageUpload()&#123;</span><br><span class="line">    var formData = new FormData();</span><br><span class="line">    formData.append(&quot;file&quot;, $(&quot;#file&quot;)[0].files[0]);</span><br><span class="line">    $.ajax(&#123;</span><br><span class="line">        url: &quot;上传接口地址&quot;,</span><br><span class="line">        type: &quot;POST&quot;,</span><br><span class="line">        data: formData,</span><br><span class="line">        processData: false,</span><br><span class="line">        contentType: false,</span><br><span class="line">        success: function(response)&#123;</span><br><span class="line">            if (response != null &amp;&amp; response != undefined) &#123;</span><br><span class="line">                $(&quot;#pdfUrl&quot;).val(response.data.url);</span><br><span class="line">            &#125;</span><br><span class="line">            winAlert(&quot;上传成功&quot;);</span><br><span class="line">        &#125;,</span><br><span class="line">        error: function () &#123;</span><br><span class="line">            winAlert(&quot;上传错误&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在后端中使用SpringMVC的情况下,参数使用MultipartFile接收即可</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/21/异步上传文件/" data-id="cjyjqq7d4001nuq0rkmyyy0lc" class="article-share-link">Share</a>
+      
+      
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/21/反序列化中的时间格式化/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          反序列化中的时间格式化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/11/ueditor插件上传配置/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ueditor插件上传配置</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/18/面向对象设计基本原则：SOLID/" class="archive-article-date">
-  <time datetime="2019-03-18T00:51:56.000Z" itemprop="datePublished">Mar 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/18/面向对象设计基本原则：SOLID/">面向对象设计基本原则：SOLID</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/14/Session-Cookie/" class="archive-article-date">
-  <time datetime="2019-03-14T08:32:21.000Z" itemprop="datePublished">Mar 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/14/Session-Cookie/">Session &amp; Cookie</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/02/25/多线程学习/" class="archive-article-date">
-  <time datetime="2019-02-25T08:18:07.000Z" itemprop="datePublished">Feb 25</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/25/多线程学习/">多线程学习</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/18/rabbitmq-websocket实现消息推送/" class="archive-article-date">
-  <time datetime="2019-01-18T03:26:19.000Z" itemprop="datePublished">Jan 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/18/rabbitmq-websocket实现消息推送/">rabbitmq+websocket实现消息推送</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/03/layUI-laypage分页实现/" class="archive-article-date">
-  <time datetime="2019-01-03T06:53:08.000Z" itemprop="datePublished">Jan 3</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/03/layUI-laypage分页实现/">layUI laypage分页实现</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/28/apiDoc基本使用/" class="archive-article-date">
-  <time datetime="2018-12-28T03:02:10.000Z" itemprop="datePublished">Dec 28</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/28/apiDoc基本使用/">apiDoc基本使用</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/21/MyBatis批量更新写法/" class="archive-article-date">
-  <time datetime="2018-12-21T01:57:42.000Z" itemprop="datePublished">Dec 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/21/MyBatis批量更新写法/">MyBatis批量更新写法</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/14/MySQL用word方式导出表结构/" class="archive-article-date">
-  <time datetime="2018-12-14T08:02:07.000Z" itemprop="datePublished">Dec 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/14/MySQL用word方式导出表结构/">MySQL用word方式导出表结构</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/09/Maven学习/" class="archive-article-date">
-  <time datetime="2018-12-09T03:07:19.000Z" itemprop="datePublished">Dec 9</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/09/Maven学习/">Maven学习</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-  </nav>
 
 </section>
         

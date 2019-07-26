@@ -5,15 +5,20 @@
   
 
   
-  <title>Archives | Hexo</title>
+  <title>公司单点登陆学习笔记 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="userKey=userId经过md5加密 思路检查请求的url是否不需要验证是否有cookieurl参数中是否有code然后重定向到这样一个地址,访问单点项目http://localhost:8080/tengchong-Auth2-server/authorize?client_id=88fd1047398a440da60c4f95e31f808b&amp;amp;response_type=code">
+<meta name="keywords" content="单点登陆">
+<meta property="og:type" content="article">
+<meta property="og:title" content="公司单点登陆学习笔记">
+<meta property="og:url" content="http://yoursite.com/2018/08/09/公司单点登陆学习笔记/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="userKey=userId经过md5加密 思路检查请求的url是否不需要验证是否有cookieurl参数中是否有code然后重定向到这样一个地址,访问单点项目http://localhost:8080/tengchong-Auth2-server/authorize?client_id=88fd1047398a440da60c4f95e31f808b&amp;amp;response_type=code">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-25T03:06:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="公司单点登陆学习笔记">
+<meta name="twitter:description" content="userKey=userId经过md5加密 思路检查请求的url是否不需要验证是否有cookieurl参数中是否有code然后重定向到这样一个地址,访问单点项目http://localhost:8080/tengchong-Auth2-server/authorize?client_id=88fd1047398a440da60c4f95e31f808b&amp;amp;response_type=code">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,226 +65,62 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/05/15/Java反射学习/" class="archive-article-date">
-  <time datetime="2019-05-15T02:41:59.000Z" itemprop="datePublished">May 15</time>
+        <section id="main"><article id="post-公司单点登陆学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/09/公司单点登陆学习笔记/" class="article-date">
+  <time datetime="2018-08-09T06:03:50.000Z" itemprop="datePublished">2018-08-09</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/15/Java反射学习/">Java反射学习</a>
+    <h1 class="article-title" itemprop="name">
+      公司单点登陆学习笔记
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>userKey=userId经过md5加密</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>检查请求的url是否不需要验证<br>是否有cookie<br>url参数中是否有code<br>然后重定向到这样一个地址,访问单点项目<br><a href="http://localhost:8080/tengchong-Auth2-server/authorize?client_id=88fd1047398a440da60c4f95e31f808b&amp;response_type=code&amp;redirect_uri=http://localhost:8080/tc-web/indexController/index.html" target="_blank" rel="noopener">http://localhost:8080/tengchong-Auth2-server/authorize?client_id=88fd1047398a440da60c4f95e31f808b&amp;response_type=code&amp;redirect_uri=http://localhost:8080/tc-web/indexController/index.html</a><br>进到单点项目的authorize接口中，首先验证clientId是否正确（每个请求验证的系统的clientId都存在数据库中），正确才能继续<br>然后判断是否已登陆，判断方法为：先检查cookie后检查redis，看其中是否存在名为userKey的键值对。<br>若没有登陆，则跳转到登陆界面jsp，并把clientId、client_secret,response_type,redirect_uri一起带到页面。<br>登陆controller:若验证失败,则带着错误信息重新返回登陆页面.若账号密码验证通过,把用户id用md5加密作为UserKey,把userKey加入cookie和redis.<br>点击登陆后验证账号密码，若通过，则把userId经过md5加密为userKey，存入cookie和redis。<br>然后重定向到另一个controller的authorize方法中再次进行验证。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: Start</span><br><span class="line">e=&gt;end</span><br><span class="line">filter=&gt;condition: 跳过验证?</span><br><span class="line">cookie=&gt;condition: 能否从cookie中获取到userId？</span><br><span class="line">code=&gt;condition: code空？</span><br><span class="line">authorize=&gt;operation: authorize</span><br><span class="line">clientIdRight=&gt;condition: clientId对吗？</span><br><span class="line">isLogin=&gt;condition: 是否已登陆？</span><br><span class="line">loginPage=&gt;operation: 登陆界面</span><br><span class="line">loginController=&gt;operation: 登陆controller</span><br><span class="line">accountRight=&gt;condition: 账号密码正确?</span><br><span class="line">setCookie=&gt;operation: 设置cookie和redis</span><br><span class="line">addUser=&gt;operation: 添加登录用户到在线用户数中</span><br><span class="line">anotherAuthorize=&gt;operation: 重定向到另一个controller中的authorize方法</span><br><span class="line">verifyClientId=&gt;operation: 验证clientId</span><br><span class="line">verifyLogin=&gt;operation: 从cookie和redis验证是否登陆</span><br><span class="line">cacheUserKey=&gt;operation: 缓存授权码</span><br><span class="line">setCode=&gt;operation: 设置授权码</span><br><span class="line"></span><br><span class="line">st-&gt;filter</span><br><span class="line">filter(no)-&gt;cookie</span><br><span class="line">cookie(yes)-&gt;e</span><br><span class="line">cookie(no)-&gt;code</span><br><span class="line">code(yes)-&gt;authorize-&gt;clientIdRight(yes)-&gt;isLogin(no)-&gt;loginPage-&gt;loginController-&gt;accountRight(yes)-&gt;setCookie-&gt;addUser-&gt;anotherAuthorize-&gt;verifyClientId-&gt;verifyLogin-&gt;setCode</span><br><span class="line">accountRight(no)-&gt;loginPage</span><br><span class="line">filter(yes)-&gt;e</span><br></pre></td></tr></table></figure>
+
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>流程有重复的步骤，比如验证clientId两次，两次尝试跳转登陆界面，两次生成授权码，两次缓存授权码</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/08/09/公司单点登陆学习笔记/" data-id="cjyjqq7cx0019uq0r3m4ejp8t" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/单点登陆/">单点登陆</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/12/AOP学习笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          AOP学习笔记
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/18/面向对象设计基本原则：SOLID/" class="archive-article-date">
-  <time datetime="2019-03-18T00:51:56.000Z" itemprop="datePublished">Mar 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/18/面向对象设计基本原则：SOLID/">面向对象设计基本原则：SOLID</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/03/14/Session-Cookie/" class="archive-article-date">
-  <time datetime="2019-03-14T08:32:21.000Z" itemprop="datePublished">Mar 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/14/Session-Cookie/">Session &amp; Cookie</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/02/25/多线程学习/" class="archive-article-date">
-  <time datetime="2019-02-25T08:18:07.000Z" itemprop="datePublished">Feb 25</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/25/多线程学习/">多线程学习</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/18/rabbitmq-websocket实现消息推送/" class="archive-article-date">
-  <time datetime="2019-01-18T03:26:19.000Z" itemprop="datePublished">Jan 18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/18/rabbitmq-websocket实现消息推送/">rabbitmq+websocket实现消息推送</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/01/03/layUI-laypage分页实现/" class="archive-article-date">
-  <time datetime="2019-01-03T06:53:08.000Z" itemprop="datePublished">Jan 3</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/03/layUI-laypage分页实现/">layUI laypage分页实现</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/28/apiDoc基本使用/" class="archive-article-date">
-  <time datetime="2018-12-28T03:02:10.000Z" itemprop="datePublished">Dec 28</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/28/apiDoc基本使用/">apiDoc基本使用</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/21/MyBatis批量更新写法/" class="archive-article-date">
-  <time datetime="2018-12-21T01:57:42.000Z" itemprop="datePublished">Dec 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/21/MyBatis批量更新写法/">MyBatis批量更新写法</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/14/MySQL用word方式导出表结构/" class="archive-article-date">
-  <time datetime="2018-12-14T08:02:07.000Z" itemprop="datePublished">Dec 14</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/14/MySQL用word方式导出表结构/">MySQL用word方式导出表结构</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/12/09/Maven学习/" class="archive-article-date">
-  <time datetime="2018-12-09T03:07:19.000Z" itemprop="datePublished">Dec 9</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/09/Maven学习/">Maven学习</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-  </nav>
 
 </section>
         
