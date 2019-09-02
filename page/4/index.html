@@ -96,7 +96,7 @@
 
   <meta property="og:type" content="website">
 <meta property="og:title" content="What`s up my nigga">
-<meta property="og:url" content="http://yoursite.com/tags/AOP/index.html">
+<meta property="og:url" content="http://yoursite.com/page/4/index.html">
 <meta property="og:site_name" content="What`s up my nigga">
 <meta property="og:locale" content="default">
 <meta name="twitter:card" content="summary">
@@ -108,7 +108,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/tags/AOP/">
+  <link rel="canonical" href="http://yoursite.com/page/4/">
 
 
 
@@ -119,7 +119,7 @@
 </script>
 
   
-  <title>Tag: AOP | What`s up my nigga</title>
+  <title>What`s up my nigga</title>
   
 
 
@@ -167,7 +167,8 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -258,95 +259,173 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
+  <section id="posts" class="posts-expand">
+    
+        
 
   
   
   
-  <div class="post-block tag">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>AOP<small>Tag</small>
-        </h1>
-      </div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/09/公司单点登陆学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Theon">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.webp">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="What`s up my nigga">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/08/09/公司单点登陆学习笔记/" class="post-title-link" itemprop="url">公司单点登陆学习笔记</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-08-09 14:03:50" itemprop="dateCreated datePublished" datetime="2018-08-09T14:03:50+08:00">2018-08-09</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-25 11:06:26" itemprop="dateModified" datetime="2018-09-25T11:06:26+08:00">2018-09-25</time>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
 
       
         
+          
+            <p>userKey=userId经过md5加密</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>检查请求的url是否不需要验证<br>是否有cookie<br>url参数中是否有code<br>然后重定向到这样一个地址,访问单点项目<br><a href="http://localhost:8080/tengchong-Auth2-server/authorize?client_id=88fd1047398a440da60c4f95e31f808b&amp;response_type=code&amp;redirect_uri=http://localhost:8080/tc-web/indexController/index.html" target="_blank" rel="noopener">http://localhost:8080/tengchong-Auth2-server/authorize?client_id=88fd1047398a440da60c4f95e31f808b&amp;response_type=code&amp;redirect_uri=http://localhost:8080/tc-web/indexController/index.html</a><br>进到单点项目的authorize接口中，首先验证clientId是否正确（每个请求验证的系统的clientId都存在数据库中），正确才能继续<br>然后判断是否已登陆，判断方法为：先检查cookie后检查redis，看其中是否存在名为userKey的键值对。<br>若没有登陆，则跳转到登陆界面jsp，并把clientId、client_secret,response_type,redirect_uri一起带到页面。<br>登陆controller:若验证失败,则带着错误信息重新返回登陆页面.若账号密码验证通过,把用户id用md5加密作为UserKey,把userKey加入cookie和redis.<br>点击登陆后验证账号密码，若通过，则把userId经过md5加密为userKey，存入cookie和redis。<br>然后重定向到另一个controller的authorize方法中再次进行验证。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: Start</span><br><span class="line">e=&gt;end</span><br><span class="line">filter=&gt;condition: 跳过验证?</span><br><span class="line">cookie=&gt;condition: 能否从cookie中获取到userId？</span><br><span class="line">code=&gt;condition: code空？</span><br><span class="line">authorize=&gt;operation: authorize</span><br><span class="line">clientIdRight=&gt;condition: clientId对吗？</span><br><span class="line">isLogin=&gt;condition: 是否已登陆？</span><br><span class="line">loginPage=&gt;operation: 登陆界面</span><br><span class="line">loginController=&gt;operation: 登陆controller</span><br><span class="line">accountRight=&gt;condition: 账号密码正确?</span><br><span class="line">setCookie=&gt;operation: 设置cookie和redis</span><br><span class="line">addUser=&gt;operation: 添加登录用户到在线用户数中</span><br><span class="line">anotherAuthorize=&gt;operation: 重定向到另一个controller中的authorize方法</span><br><span class="line">verifyClientId=&gt;operation: 验证clientId</span><br><span class="line">verifyLogin=&gt;operation: 从cookie和redis验证是否登陆</span><br><span class="line">cacheUserKey=&gt;operation: 缓存授权码</span><br><span class="line">setCode=&gt;operation: 设置授权码</span><br><span class="line"></span><br><span class="line">st-&gt;filter</span><br><span class="line">filter(no)-&gt;cookie</span><br><span class="line">cookie(yes)-&gt;e</span><br><span class="line">cookie(no)-&gt;code</span><br><span class="line">code(yes)-&gt;authorize-&gt;clientIdRight(yes)-&gt;isLogin(no)-&gt;loginPage-&gt;loginController-&gt;accountRight(yes)-&gt;setCookie-&gt;addUser-&gt;anotherAuthorize-&gt;verifyClientId-&gt;verifyLogin-&gt;setCode</span><br><span class="line">accountRight(no)-&gt;loginPage</span><br><span class="line">filter(yes)-&gt;e</span><br></pre></td></tr></table></figure>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>流程有重复的步骤，比如验证clientId两次，两次尝试跳转登陆界面，两次生成授权码，两次缓存授权码</p>
 
-      <h2 class="post-title">
+          
         
-          <a class="post-title-link" href="/2018/08/14/AOP实例：日志记录/" itemprop="url">
-            
-              <span itemprop="name">AOP实例：日志记录</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-08-14T13:59:30+08:00" content="2018-08-14">
-          08-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2018/08/12/AOP学习笔记/" itemprop="url">
-            
-              <span itemprop="name">AOP学习笔记</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-08-12T10:42:45+08:00" content="2018-08-12">
-          08-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
       
     </div>
 
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </div>
   
   
   
+  </article>
+
+    
+  </section>
 
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+  </nav>
 
 
 
