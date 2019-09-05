@@ -322,13 +322,23 @@
                 
               
 
-              <time title="Created: 2019-09-02 16:58:23 / Modified: 17:17:05" itemprop="dateCreated datePublished" datetime="2019-09-02T16:58:23+08:00">2019-09-02</time>
+              <time title="Created: 2019-09-02 16:58:23" itemprop="dateCreated datePublished" datetime="2019-09-02T16:58:23+08:00">2019-09-02</time>
             </span>
           
 
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-09-05 17:18:26" itemprop="dateModified" datetime="2019-09-05T17:18:26+08:00">2019-09-05</time>
+              </span>
             
           
 
@@ -387,10 +397,10 @@
 </li>
 </ul>
 <h2 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h2><p>（“mysql &lt; ”）或在mysql数据库中直接执行“source sql备份文件;”进行恢复。如果sql执行语句比较多，可以将sql语句放在一个文件内，将文件名命名为.sql结尾，然后在mysql数据库中使用”source 文件.sql;”命令进行执行即可！</p>
-<h2 id="备份并自动清理历史备份的bash脚本"><a href="#备份并自动清理历史备份的bash脚本" class="headerlink" title="备份并自动清理历史备份的bash脚本"></a>备份并自动清理历史备份的bash脚本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment">#数据库备份脚本</span></span><br><span class="line">DATE=`date <span class="string">"+%Y%m%d"</span>`</span><br><span class="line">TIME=`date <span class="string">"+%Y-%m-%d %H:%M:%S"</span>`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'--------------开始数据库备份 '</span><span class="variable">$TIME</span></span><br><span class="line">BACKUP_DIR=/data/backup/mysql</span><br><span class="line">mkdir -p <span class="variable">$BACKUP_DIR</span></span><br><span class="line">sudo MYSQLdump --quick --databases lyg_bigdata lyg_bigdata lyg_scenic_plat lyg_web --single-transaction --events --routines --triggers --flush-logs -h127.0.0.1 -uroot -ppassword | gzip&gt;<span class="variable">$BACKUP_DIR</span>/<span class="variable">$DATE</span>.sql.gz</span><br><span class="line">END_TIME=`date <span class="string">"+%Y-%m-%d %H:%M:%S"</span>`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'--------------备份结束 '</span><span class="variable">$TIME</span></span><br><span class="line"><span class="comment">#删除10天以前的备份</span></span><br><span class="line">find <span class="variable">$BACKUP_DIR</span> -name <span class="string">'*'</span>`date +%Y`<span class="string">'*'</span> -mtime +10 -<span class="built_in">exec</span> rm &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+<h2 id="备份并自动清理历史备份的bash脚本"><a href="#备份并自动清理历史备份的bash脚本" class="headerlink" title="备份并自动清理历史备份的bash脚本"></a>备份并自动清理历史备份的bash脚本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment">#数据库备份脚本</span></span><br><span class="line">DATE=`date <span class="string">"+%Y%m%d"</span>`</span><br><span class="line">TIME=`date <span class="string">"+%Y-%m-%d %H:%M:%S"</span>`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'--------------开始数据库备份 '</span><span class="variable">$TIME</span></span><br><span class="line">BACKUP_DIR=/data/backup/mysql</span><br><span class="line">mkdir -p <span class="variable">$BACKUP_DIR</span></span><br><span class="line">mysqldump --quick --databases lyg_bigdata lyg_bigdata lyg_scenic_plat lyg_web --single-transaction --events --routines --triggers --flush-logs -h127.0.0.1 -uroot -ppassword | gzip&gt;<span class="variable">$BACKUP_DIR</span>/<span class="variable">$DATE</span>.sql.gz</span><br><span class="line">END_TIME=`date <span class="string">"+%Y-%m-%d %H:%M:%S"</span>`</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'--------------备份结束 '</span><span class="variable">$TIME</span></span><br><span class="line"><span class="comment">#删除10天以前的备份</span></span><br><span class="line">find <span class="variable">$BACKUP_DIR</span> -name <span class="string">'*'</span>`date +%Y`<span class="string">'*'</span> -mtime +10 -<span class="built_in">exec</span> rm &#123;&#125; \;</span><br></pre></td></tr></table></figure>
 
 <h3 id="相关指令用法"><a href="#相关指令用法" class="headerlink" title="相关指令用法"></a>相关指令用法</h3><ol>
-<li><p>date<br>此指令用来输出时间信息. 可以自定义格式化, 例如: </p>
+<li><p>date<br>此指令用来输出时间信息. 可以自定义格式化, 例如:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date <span class="string">"+%Y-%m-%d %H:%M:%S</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>find -mtime<br>此参数为按照更改时间来查找文件. +代表n日以前修改的文件, -代表在距今天n日以内修改的文件.</p>
@@ -407,6 +417,11 @@
 <li>$变量名<br>取出变量值</li>
 </ol>
 <h2 id="使用crontab指令定时调用脚本"><a href="#使用crontab指令定时调用脚本" class="headerlink" title="使用crontab指令定时调用脚本"></a>使用crontab指令定时调用脚本</h2><p>crontab是linux下用来定时执行程序的指令, 非常容易使用.<br>参考: <a href="https://www.runoob.com/linux/linux-comm-crontab.html" target="_blank" rel="noopener">https://www.runoob.com/linux/linux-comm-crontab.html</a></p>
+<p>这里踩了一个坑, 手动执行脚本可以正常执行, 但是crontab调用脚本会产生一个大小为0的备份文件.我在修改了两个地方以后便可以正常备份了:</p>
+<ol>
+<li>mysqldump使用绝对路径或者建立软链接</li>
+<li>不要在mysqldump之前加上sudo</li>
+</ol>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
 <li><a href="https://www.cnblogs.com/kevingrace/p/6112565.html" target="_blank" rel="noopener">https://www.cnblogs.com/kevingrace/p/6112565.html</a></li>
 </ul>
