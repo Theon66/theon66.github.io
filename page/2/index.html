@@ -277,6 +277,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/21/MyBatis批量更新写法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Theon">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.webp">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="What`s up my nigga">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/12/21/MyBatis批量更新写法/" class="post-title-link" itemprop="url">MyBatis批量更新写法</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-21 09:57:42 / Modified: 16:36:11" itemprop="dateCreated datePublished" datetime="2018-12-21T09:57:42+08:00">2018-12-21</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;update id="updateThisMonthBatch" parameterType="java.util.List"&gt;</span><br><span class="line">        <span class="keyword">UPDATE</span> crew_scheduling</span><br><span class="line">        <span class="keyword">SET</span> plan_name = <span class="keyword">CASE</span> title</span><br><span class="line">        &lt;foreach collection=<span class="string">"list"</span> item=<span class="string">"entity"</span>&gt;</span><br><span class="line">          &lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"entity.planName == null"</span>&gt;</span><br><span class="line">              <span class="keyword">WHEN</span> <span class="comment">#&#123;entity.title&#125; THEN crew_scheduling.plan_name</span></span><br><span class="line">          &lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">          &lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"entity.planName != null"</span>&gt;</span><br><span class="line">              <span class="keyword">WHEN</span> <span class="comment">#&#123;entity.title&#125; THEN #&#123;entity.planName&#125;</span></span><br><span class="line">          &lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">        &lt;/foreach&gt;</span><br><span class="line">        <span class="keyword">END</span> , plan_status = <span class="keyword">CASE</span> title</span><br><span class="line">        &lt;foreach collection=<span class="string">"list"</span> item=<span class="string">"entity"</span>&gt;</span><br><span class="line">            &lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"entity.planStatus == null"</span>&gt;</span><br><span class="line">                <span class="keyword">WHEN</span> <span class="comment">#&#123;entity.title&#125; THEN crew_scheduling.plan_status</span></span><br><span class="line">            &lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">            &lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"entity.planStatus != null"</span>&gt;</span><br><span class="line">                <span class="keyword">WHEN</span> <span class="comment">#&#123;entity.title&#125; THEN #&#123;entity.planStatus&#125;</span></span><br><span class="line">            &lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">        &lt;/foreach&gt;</span><br><span class="line">        <span class="keyword">END</span> , car_num = <span class="keyword">CASE</span> title</span><br><span class="line">        &lt;foreach collection=<span class="string">"list"</span> item=<span class="string">"entity"</span>&gt;</span><br><span class="line">            &lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"entity.carNum == null"</span>&gt;</span><br><span class="line">                <span class="keyword">WHEN</span> <span class="comment">#&#123;entity.title&#125; THEN crew_scheduling.car_num</span></span><br><span class="line">            &lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">            &lt;<span class="keyword">if</span> <span class="keyword">test</span>=<span class="string">"entity.carNum != null"</span>&gt;</span><br><span class="line">                <span class="keyword">WHEN</span> <span class="comment">#&#123;entity.title&#125; THEN #&#123;entity.carNum&#125;</span></span><br><span class="line">            &lt;/<span class="keyword">if</span>&gt;</span><br><span class="line">        &lt;/foreach&gt;</span><br><span class="line">        <span class="keyword">END</span></span><br><span class="line">        <span class="keyword">WHERE</span> <span class="keyword">DATE_FORMAT</span>(create_time,<span class="string">'%Y-%m'</span>) = <span class="keyword">DATE_FORMAT</span>(<span class="keyword">NOW</span>(),<span class="string">'%Y-%m'</span>)</span><br><span class="line">    &lt;/<span class="keyword">update</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>以上代码的作用为批量更新本月数据，主要使用了</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> 字段名 = <span class="keyword">CASE</span> <span class="keyword">WHEN</span> 字段值 <span class="keyword">THEN</span> 新字段值 <span class="keyword">CASE</span> <span class="keyword">WHEN</span> 字段值 <span class="keyword">THEN</span> 新字段值......</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/14/MySQL用word方式导出表结构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1682,165 +1828,6 @@
   </article>
 
     
-        
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/28/使用freemarker生成静态HTML页面/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Theon">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/uploads/avatar.webp">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="What`s up my nigga">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/09/28/使用freemarker生成静态HTML页面/" class="post-title-link" itemprop="url">使用freemarker生成静态HTML页面</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-09-28 15:17:56 / Modified: 16:25:35" itemprop="dateCreated datePublished" datetime="2018-09-28T15:17:56+08:00">2018-09-28</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="freemarker"><a href="#freemarker" class="headerlink" title="freemarker"></a>freemarker</h1><p>FreeMarker 是一款 模板引擎： 即一种基于模板和要改变的数据， 并用来生成输出文本(HTML网页，电子邮件，配置文件，源代码等)的通用工具。 它不是面向最终用户的，而是一个Java类库，是一款程序员可以嵌入他们所开发产品的组件。</p>
-<h1 id="关于静态页面"><a href="#关于静态页面" class="headerlink" title="关于静态页面"></a>关于静态页面</h1><p>静态页面跟动态页面相比，有更快的访问速度，可以减小服务器和数据库的压力。</p>
-<h1 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h1><p>首先写一个模板, freemarkertest.ftl</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Welcome!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello $&#123;w&#125;!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>生成模板的实例方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HtmlGenerator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    Configuration configuration;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">generateHTML</span><span class="params">(Map&lt;String, Object&gt; data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//获取templates下的模板文件</span></span><br><span class="line">            Template template = configuration</span><br><span class="line">                    .getTemplate(<span class="string">"freemarkertest.ftl"</span>);</span><br><span class="line">            <span class="comment">//生成html的位置</span></span><br><span class="line">            String path =      <span class="string">"C:\\Devlopment\\projects\\example\\src\\main\\resources\\static\\test.html"</span>;</span><br><span class="line">            Writer writer = <span class="keyword">new</span> FileWriter(<span class="keyword">new</span> File(path));</span><br><span class="line">            template.process(data, writer);</span><br><span class="line">            writer.flush();</span><br><span class="line">            writer.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;  <span class="keyword">catch</span> (TemplateException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>单元测试</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringRunner.class)</span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitMQTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> HtmlGenerator htmlGenerator;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">generate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; data = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">1</span>);</span><br><span class="line">        data.put(<span class="string">"w"</span>, <span class="string">"Theon"</span>);</span><br><span class="line">        htmlGenerator.generateHTML(data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>生成的静态文件  test.html</p>
-<p>可以看到${w}已被替换为换入的值</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Welcome!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello Theon!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="关于何时生成HTML"><a href="#关于何时生成HTML" class="headerlink" title="关于何时生成HTML"></a>关于何时生成HTML</h1><p>自己这边要做的是一个旅游景区宣传网站，不知道可不可以全用静态页面。</p>
-<p>使用切面，用户在后台做了修改后，重新生成对应页面。</p>
-<p>还得多查点资料学习一下，to be continued</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </section>
 
   
@@ -1890,7 +1877,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1966,7 +1953,9 @@
         
           
         
-        <span class="site-state-item-count">21</span>
+          
+        
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">tags</span>
         
       </div>

@@ -94,18 +94,18 @@
   };
 </script>
 
-  <meta name="description" content="背景最近优化了公司的门户网站，由于首页十分臃肿，有大量的图片和Echart地图的内容。从一开始完全加载完毕需要2分钟以上，优化到只要7s左右，记录一下都用了哪些方法来优化网站。 处理图片压缩图片是最直接也是最有效的方法，在带宽不变的情况下，资源越大，网站加载时间也就越长。而未经处理和压缩的图片经常大的吓人。  把PNG的图片转换为jpg通常可以缩小很多体积。（这里我不太确定jpg是不是就是最理想的">
-<meta name="keywords" content="JavaWeb">
+  <meta name="description" content="准备环境本文以Tomcat 8.5为例  Apache Tomcat 8.5 requires a Java Standard Edition RuntimeEnvironment (JRE) version 7 or later.   下载解压jdk 配置环境变量/etc/profile1export JAVA_HOME=你的jdk主目录    执行以下指令使配置文件生效 1source /et">
+<meta name="keywords" content="Tomcat">
 <meta property="og:type" content="article">
-<meta property="og:title" content="门户网站优化记录">
-<meta property="og:url" content="http://yoursite.com/2018/11/01/门户网站优化记录/index.html">
+<meta property="og:title" content="Tomcat安装部署流程">
+<meta property="og:url" content="http://yoursite.com/2019/10/03/Tomcat安装部署流程/index.html">
 <meta property="og:site_name" content="What`s up my nigga">
-<meta property="og:description" content="背景最近优化了公司的门户网站，由于首页十分臃肿，有大量的图片和Echart地图的内容。从一开始完全加载完毕需要2分钟以上，优化到只要7s左右，记录一下都用了哪些方法来优化网站。 处理图片压缩图片是最直接也是最有效的方法，在带宽不变的情况下，资源越大，网站加载时间也就越长。而未经处理和压缩的图片经常大的吓人。  把PNG的图片转换为jpg通常可以缩小很多体积。（这里我不太确定jpg是不是就是最理想的">
+<meta property="og:description" content="准备环境本文以Tomcat 8.5为例  Apache Tomcat 8.5 requires a Java Standard Edition RuntimeEnvironment (JRE) version 7 or later.   下载解压jdk 配置环境变量/etc/profile1export JAVA_HOME=你的jdk主目录    执行以下指令使配置文件生效 1source /et">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-02T02:29:52.000Z">
+<meta property="og:updated_time" content="2019-10-07T13:18:25.610Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="门户网站优化记录">
-<meta name="twitter:description" content="背景最近优化了公司的门户网站，由于首页十分臃肿，有大量的图片和Echart地图的内容。从一开始完全加载完毕需要2分钟以上，优化到只要7s左右，记录一下都用了哪些方法来优化网站。 处理图片压缩图片是最直接也是最有效的方法，在带宽不变的情况下，资源越大，网站加载时间也就越长。而未经处理和压缩的图片经常大的吓人。  把PNG的图片转换为jpg通常可以缩小很多体积。（这里我不太确定jpg是不是就是最理想的">
+<meta name="twitter:title" content="Tomcat安装部署流程">
+<meta name="twitter:description" content="准备环境本文以Tomcat 8.5为例  Apache Tomcat 8.5 requires a Java Standard Edition RuntimeEnvironment (JRE) version 7 or later.   下载解压jdk 配置环境变量/etc/profile1export JAVA_HOME=你的jdk主目录    执行以下指令使配置文件生效 1source /et">
 
 
 
@@ -113,7 +113,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2018/11/01/门户网站优化记录/">
+  <link rel="canonical" href="http://yoursite.com/2019/10/03/Tomcat安装部署流程/">
 
 
 
@@ -124,7 +124,7 @@
 </script>
 
   
-  <title>门户网站优化记录 | What`s up my nigga</title>
+  <title>Tomcat安装部署流程 | What`s up my nigga</title>
   
 
 
@@ -281,7 +281,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/01/门户网站优化记录/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/03/Tomcat安装部署流程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Theon">
@@ -298,7 +298,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">门户网站优化记录
+          <h1 class="post-title" itemprop="name headline">Tomcat安装部署流程
 
               
             
@@ -324,7 +324,7 @@
                 
               
 
-              <time title="Created: 2018-11-01 15:16:14" itemprop="dateCreated datePublished" datetime="2018-11-01T15:16:14+08:00">2018-11-01</time>
+              <time title="Created: 2019-10-03 10:01:56" itemprop="dateCreated datePublished" datetime="2019-10-03T10:01:56+08:00">2019-10-03</time>
             </span>
           
 
@@ -339,7 +339,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-02 10:29:52" itemprop="dateModified" datetime="2018-11-02T10:29:52+08:00">2018-11-02</time>
+                <time title="Modified: 2019-10-07 21:18:25" itemprop="dateModified" datetime="2019-10-07T21:18:25+08:00">2019-10-07</time>
               </span>
             
           
@@ -373,27 +373,46 @@
       
 
       
-        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近优化了公司的门户网站，由于首页十分臃肿，有大量的图片和Echart地图的内容。从一开始完全加载完毕需要2分钟以上，优化到只要7s左右，记录一下都用了哪些方法来优化网站。</p>
-<h1 id="处理图片"><a href="#处理图片" class="headerlink" title="处理图片"></a>处理图片</h1><p>压缩图片是最直接也是最有效的方法，在带宽不变的情况下，资源越大，网站加载时间也就越长。而未经处理和压缩的图片经常大的吓人。</p>
+        <h1 id="准备环境"><a href="#准备环境" class="headerlink" title="准备环境"></a>准备环境</h1><p>本文以Tomcat 8.5为例</p>
+<blockquote>
+<p>Apache Tomcat 8.5 requires a Java Standard Edition Runtime<br>Environment (JRE) version 7 or later.</p>
+</blockquote>
 <ol>
-<li>把PNG的图片转换为jpg通常可以缩小很多体积。（这里我不太确定jpg是不是就是最理想的图片类型）</li>
-<li>使用nginx图片过滤模块，重置图片尺寸，这样可以保证网页上图片显示的实际大小与请求的图片大小相同，如果请求的图片尺寸太大（大于页面上显示），则等于浪费了带宽。还可以避免存储多个尺寸的同一张图片。要注意的是此方法不适合并大量较大的网站，因为nginx在处理图片时会消耗服务器资源，量过大的时候会增加服务器负担。</li>
-<li>使用懒加载，用了一个叫lozad的js插件，只加载可视范围内的图片。</li>
+<li>下载解压jdk</li>
+<li>配置环境变量/etc/profile<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=你的jdk主目录</span><br></pre></td></tr></table></figure>
+
+</li>
 </ol>
-<h1 id="压缩js、css等静态资源"><a href="#压缩js、css等静态资源" class="headerlink" title="压缩js、css等静态资源"></a>压缩js、css等静态资源</h1><ul>
-<li>启用nginx的Gzip功能，可以大幅压缩静态文件的体积，减少网页传输的时间。</li>
-</ul>
-<h1 id="提高带宽"><a href="#提高带宽" class="headerlink" title="提高带宽"></a>提高带宽</h1><p>这是最简单粗暴有效的办法，有钱就行。</p>
-<h1 id="使用jsp-静态页面-ajax？"><a href="#使用jsp-静态页面-ajax？" class="headerlink" title="使用jsp/静态页面/ajax？"></a>使用jsp/静态页面/ajax？</h1><ul>
-<li>ajax： 网站本来大部分内容都是使用ajax加载的，个人认为ajax并不适合门户网站这种变动较小的网站，而且使用ajax无法使用lozad进行懒加载，而且ajax加载的内容无法被百度等搜索引擎所抓取，导致用户搜索不到。</li>
-<li>jsp：使用传统的mvc模式，我这次就是用的jsp，因为改起来比较容易，而且没有ajax上面所说的缺点。</li>
-<li>静态页面：在每次后台上传新的文章后，使用模板引擎生成静态页面，用户直接访问静态页面。显然这是最好的办法，更快的访问速度，使用服务器资源最少。</li>
-</ul>
-<h1 id="合并多个js，css文件"><a href="#合并多个js，css文件" class="headerlink" title="合并多个js，css文件"></a>合并多个js，css文件</h1><p>理论上来说，请求多个js文件所花时间会大于单个js，但我实际合并过后，不知为何网站加载时间没有缩短，反而还稍微有增加。但从几个测速网站来看，单个js确实好于多个js。这里的原因暂时还不清楚。</p>
-<h1 id="一些其他有用的东西"><a href="#一些其他有用的东西" class="headerlink" title="一些其他有用的东西"></a>一些其他有用的东西</h1><ol>
-<li><a href="https://developers.google.com/speed/pagespeed/insights/?hl=zh-CN" target="_blank" rel="noopener">Google Pagespeed Insights</a>, 这个谷歌产品可以帮你分析网站，给你优化网站的建议。</li>
-<li>Pagespeed，此工具可以集成到apache或nginx中，可以自动帮你进行网站优化，据说效果非常好，虽然我自己没有用，因为我已经手动做了大部分的工作。但这个东西有一个缺点，似乎会占用不少的服务器cpu资源。</li>
+<p>执行以下指令使配置文件生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>检查环境变量是否配置成功<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+</li>
 </ol>
+<h1 id="安装Tomcat"><a href="#安装Tomcat" class="headerlink" title="安装Tomcat"></a>安装Tomcat</h1><ol>
+<li><p>下载Tomcat</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.46/bin/apache-tomcat-8.5.46.tar.gz</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压到指定文件夹</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf apache-tomcat-8.5.46.tar.gz -C 你的解压路径</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置CATALINA_HOME环境变量(非必须)<br>此配置可以保证启动脚本的绝对正确执行, 但不配置Tomcat也可以自动寻找Tomcat路径. 若一台机子需要安装多个Tomcat, 不要配置此环境变量.<br>编辑/etc/profile, 加入以下内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> TOMCAT_HOME=/你的路径/apache-tomcat-8.5.46</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>执行以下指令使配置文件生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>给启动脚本赋权<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 tomcat路径/bin/*.sh</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="程序部署"><a href="#程序部署" class="headerlink" title="程序部署"></a>程序部署</h1><p>下次接着总结</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="http://tomcat.apache.org/tomcat-8.5-doc/RUNNING.txt" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/RUNNING.txt</a></p>
 
       
     </div>
@@ -424,7 +443,7 @@
         
         <div class="post-tags">
           
-            <a href="/tags/JavaWeb/" rel="tag"># JavaWeb</a>
+            <a href="/tags/Tomcat/" rel="tag"># Tomcat</a>
           
         </div>
       
@@ -437,8 +456,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/24/使用nginx优化网站访问速度/" rel="next" title="使用nginx优化网站访问速度">
-                <i class="fa fa-chevron-left"></i> 使用nginx优化网站访问速度
+              <a href="/2019/09/02/使用mysqldump进行数据库备份/" rel="next" title="使用mysqldump进行数据库备份">
+                <i class="fa fa-chevron-left"></i> 使用mysqldump进行数据库备份
               </a>
             
           </div>
@@ -446,10 +465,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/12/景区网站学习记录/" rel="prev" title="景区网站学习记录">
-                景区网站学习记录 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -632,7 +647,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#处理图片"><span class="nav-number">2.</span> <span class="nav-text">处理图片</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#压缩js、css等静态资源"><span class="nav-number">3.</span> <span class="nav-text">压缩js、css等静态资源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#提高带宽"><span class="nav-number">4.</span> <span class="nav-text">提高带宽</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用jsp-静态页面-ajax？"><span class="nav-number">5.</span> <span class="nav-text">使用jsp/静态页面/ajax？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#合并多个js，css文件"><span class="nav-number">6.</span> <span class="nav-text">合并多个js，css文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一些其他有用的东西"><span class="nav-number">7.</span> <span class="nav-text">一些其他有用的东西</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#准备环境"><span class="nav-number">1.</span> <span class="nav-text">准备环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Tomcat"><span class="nav-number">2.</span> <span class="nav-text">安装Tomcat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#程序部署"><span class="nav-number">3.</span> <span class="nav-text">程序部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>
