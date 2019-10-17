@@ -337,7 +337,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-10-07 21:18:25" itemprop="dateModified" datetime="2019-10-07T21:18:25+08:00">2019-10-07</time>
+                <time title="Modified: 2019-10-17 11:37:15" itemprop="dateModified" datetime="2019-10-17T11:37:15+08:00">2019-10-17</time>
               </span>
             
           
@@ -379,7 +379,7 @@
 </blockquote>
 <ol>
 <li>下载解压jdk</li>
-<li>配置环境变量/etc/profile<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=你的jdk主目录</span><br></pre></td></tr></table></figure>
+<li>配置环境变量/etc/profile<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=你的jdk主目录</span><br><span class="line">PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span></span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
@@ -411,8 +411,11 @@
 
 </li>
 </ol>
-<h1 id="程序部署"><a href="#程序部署" class="headerlink" title="程序部署"></a>程序部署</h1><p>下次接着总结</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="http://tomcat.apache.org/tomcat-8.5-doc/RUNNING.txt" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/RUNNING.txt</a></p>
+<h1 id="程序部署"><a href="#程序部署" class="headerlink" title="程序部署"></a>程序部署</h1><h2 id="直接部署war包"><a href="#直接部署war包" class="headerlink" title="直接部署war包"></a>直接部署war包</h2><p>将打包好的war包直接拷贝到webapps根目录下, 执行startup.sh启动程序, 默认使用8080端口, 程序访问根路径为自动解压后的文件夹名</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="http://tomcat.apache.org/tomcat-8.5-doc/RUNNING.txt" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/RUNNING.txt</a></li>
+<li><a href="https://tomcat.apache.org/tomcat-8.5-doc/appdev/deployment.html#Deployment_With_Tomcat" target="_blank" rel="noopener">https://tomcat.apache.org/tomcat-8.5-doc/appdev/deployment.html#Deployment_With_Tomcat</a></li>
+</ul>
 
           
         
