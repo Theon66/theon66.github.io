@@ -280,6 +280,177 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/14/AOP实例：日志记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Theon">
+      <meta itemprop="description" content="隐忍. 厚积薄发.">
+      <meta itemprop="image" content="/uploads/avatar.webp">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Theon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/08/14/AOP实例：日志记录/" class="post-title-link" itemprop="url">AOP实例：日志记录</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-08-14 13:59:30" itemprop="dateCreated datePublished" datetime="2018-08-14T13:59:30+08:00">2018-08-14</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-08-15 14:12:04" itemprop="dateModified" datetime="2018-08-15T14:12:04+08:00">2018-08-15</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/AOP/" itemprop="url" rel="index"><span itemprop="name">AOP</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>公司要求记录报表里用户的操作，以前没有使用过AOP，一开始想着编写几个接口，在要记录的地方调一下接口。其实这种方法很蠢，AOP正是为了解决这种问题而生的。</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>最开始采用自定义注解的方式，即在要记录的方法处加上一句注解。但其实这是一种糟糕的设计，这样会把这些业务模块的关注点变的不单一，业务模块不需要知道自己会不会被记录。</p>
+<p>所以采用AspectJ表达式才是正确的姿势。</p>
+<h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 记录报表内行为切面</span><br><span class="line"> * @Author shiyong</span><br><span class="line"> */</span><br><span class="line">@Aspect</span><br><span class="line">@Component</span><br><span class="line">public class LogAspect &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 报表查询操作切点</span><br><span class="line">     */</span><br><span class="line">    @Pointcut(&quot;execution(* com.wisesoft.bigdata.controller.data.*&quot; +</span><br><span class="line">            &quot;Controller.listHtmlDataReport(..))&quot;)</span><br><span class="line">    public void report() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 报表导出操作切点</span><br><span class="line">     */</span><br><span class="line">    @Pointcut(&quot;execution(* com.wisesoft.bigdata.controller.data.*&quot; +</span><br><span class="line">            &quot;Controller.exportExcel(..))&quot;)</span><br><span class="line">    public void export() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 报表统计操作日志</span><br><span class="line">     */</span><br><span class="line">    @Before(&quot;report()&quot;)</span><br><span class="line">    public void reportLog(JoinPoint joinPoint) &#123;</span><br><span class="line">        ReportUserBehaviorVO vo = new ReportUserBehaviorVO();</span><br><span class="line">        vo.setBehavior(&quot;统计&quot;);</span><br><span class="line">        insertReportBehavior(joinPoint, vo);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 报表导出操作日志</span><br><span class="line">     */</span><br><span class="line">    @Before(&quot;export()&quot;)</span><br><span class="line">    public void exportLog(JoinPoint joinPoint) &#123;</span><br><span class="line">        ReportUserBehaviorVO vo = new ReportUserBehaviorVO();</span><br><span class="line">        vo.setBehavior(&quot;导出&quot;);</span><br><span class="line">        insertReportBehavior(joinPoint, vo);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 根据class获取模块名称</span><br><span class="line">     */</span><br><span class="line">    public String getModuleNameByClass(Class c) &#123;</span><br><span class="line">        if (c.isAssignableFrom(MdayagePager.class)) &#123;</span><br><span class="line">            return &quot;游客年龄分布日报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MdaygenderPager.class)) &#123;</span><br><span class="line">            return &quot;游客性别分布日报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MdayhotlinePager.class)) &#123;</span><br><span class="line">            return &quot;热门路线日报表&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MdayovernightPager.class)) &#123;</span><br><span class="line">            return &quot;游客过夜日报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MdaysourcecityPager.class)) &#123;</span><br><span class="line">            return &quot;游客来源城市日报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MdaysourcecountryPager.class)) &#123;</span><br><span class="line">            return &quot;境外游客来源日报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MdaysourceprovincePager.class)) &#123;</span><br><span class="line">            return &quot;游客来源省份日报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MdaystayPager.class)) &#123;</span><br><span class="line">            return &quot;游客驻留日报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthagePager.class)) &#123;</span><br><span class="line">            return &quot;游客年龄分布月报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthgenderPager.class)) &#123;</span><br><span class="line">            return &quot;游客性别分布月报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthhotlinePager.class)) &#123;</span><br><span class="line">            return &quot;热门路线月报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthlocalPager.class)) &#123;</span><br><span class="line">            return &quot;月度游客实时累计&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthovernightPager.class)) &#123;</span><br><span class="line">            return &quot;过夜游客月报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthsourcecityPager.class)) &#123;</span><br><span class="line">            return &quot;游客城市来源月报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthsourcecountryPager.class)) &#123;</span><br><span class="line">            return &quot;境外游客来源月报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthsourceprovincePager.class)) &#123;</span><br><span class="line">            return &quot;游客省份来源月报&quot;;</span><br><span class="line">        &#125; else if (c.isAssignableFrom(MmonthstayPager.class)) &#123;</span><br><span class="line">            return &quot;游客驻留月报&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">        return &quot;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 由于统计和导出操作唯一的区别是behavior字段不同，</span><br><span class="line">     * 所以把代码抽出来避免代码重复冗余</span><br><span class="line">     */</span><br><span class="line">    public void insertReportBehavior (JoinPoint joinPoint,ReportUserBehaviorVO vo) &#123;</span><br><span class="line">        Signature signature = joinPoint.getSignature();</span><br><span class="line">        System.out.println(signature.toString());</span><br><span class="line">        Object[] objects = joinPoint.getArgs();</span><br><span class="line">        Class c = objects[0].getClass();</span><br><span class="line">        String countDateStart = null;</span><br><span class="line">        String countDateEnd = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            //利用反射获取不同类的参数值</span><br><span class="line">            Method getCountDateStart = c.getMethod(&quot;getCountDateStart&quot;, null);</span><br><span class="line">            countDateStart = getCountDateStart.invoke(objects[0], null).toString();</span><br><span class="line">            Method getCountDateEnd = c.getMethod(&quot;getCountDateEnd&quot;, null);</span><br><span class="line">            countDateEnd = getCountDateEnd.invoke(objects[0], null).toString();</span><br><span class="line">        &#125; catch (NoSuchMethodException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (IllegalAccessException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; catch (InvocationTargetException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        //组装操作详情</span><br><span class="line">        StringBuffer stringBuffer = new StringBuffer();</span><br><span class="line">        stringBuffer.append(&quot;时间段&quot;);</span><br><span class="line">        stringBuffer.append(countDateStart);</span><br><span class="line">        stringBuffer.append(&quot;至&quot;);</span><br><span class="line">        stringBuffer.append(countDateEnd);</span><br><span class="line"></span><br><span class="line">        vo.setId(UuidUtil.uuidStr());</span><br><span class="line">        vo.setUserName(UserSessionContext.getLoginUserName());</span><br><span class="line">        vo.setBrowseTime(new Date());</span><br><span class="line">        vo.setStatisticsDetail(stringBuffer.toString());</span><br><span class="line">        //获取模块名称</span><br><span class="line">        String moduleName = getModuleNameByClass(c);</span><br><span class="line">        vo.setModuleName(moduleName);</span><br><span class="line">        vo.insert();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/12/AOP学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -648,7 +819,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -726,7 +897,9 @@
         
           
         
-        <span class="site-state-item-count">22</span>
+          
+        
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">tags</span>
         
       </div>
