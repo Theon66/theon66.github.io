@@ -280,6 +280,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/多文件上传接口实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Theon">
+      <meta itemprop="description" content="隐忍. 厚积薄发.">
+      <meta itemprop="image" content="/uploads/avatar.webp">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Theon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/09/03/多文件上传接口实现/" class="post-title-link" itemprop="url">多文件上传接口实现</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-03 15:06:45 / Modified: 15:26:08" itemprop="dateCreated datePublished" datetime="2018-09-03T15:06:45+08:00">2018-09-03</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/API/" itemprop="url" rel="index"><span itemprop="name">API</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>为移动端提交接口，接收存储表单信息，包括多个字段，和多张图片(数量不定)。</p>
+<h1 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h1><h2 id="首先把要接收的参数封装成实体类"><a href="#首先把要接收的参数封装成实体类" class="headerlink" title="首先把要接收的参数封装成实体类"></a>首先把要接收的参数封装成实体类</h2><p>需要注意的是,使用MultipartFile数组的方式来接收多张图片</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">@ApiModel(value = &quot;设备巡检表单&quot;, description = &quot;content-type=multipart/form-data, 可上传多张图片&quot;)</span><br><span class="line">public class DeviceInspectionForm &#123;</span><br><span class="line"></span><br><span class="line">    @ApiModelProperty(value = &quot;设备名称&quot;)</span><br><span class="line">    @NotBlank(message = &quot;设备名称不能为空&quot;)</span><br><span class="line">    private String deviceName;</span><br><span class="line"></span><br><span class="line">    .........</span><br><span class="line"></span><br><span class="line">    @ApiModelProperty(value = &quot;现场图片，支持多文件上传&quot;)</span><br><span class="line">    private MultipartFile[] files ;</span><br><span class="line"></span><br><span class="line">    public String getDeviceName() &#123;</span><br><span class="line">        return deviceName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setDeviceName(String deviceName) &#123;</span><br><span class="line">        this.deviceName = deviceName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .........</span><br><span class="line"></span><br><span class="line">    public MultipartFile[] getFiles() &#123;</span><br><span class="line">        return files;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setFiles(MultipartFile[] files) &#123;</span><br><span class="line">        this.files = files;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写controller"><a href="#编写controller" class="headerlink" title="编写controller"></a>编写controller</h2><p>这里使用公司的图片存储服务,把返回的图片url存入数据库</p>
+<p>要注意的是,在请求header中设置content-type=multipart/form-data,这是表单提交中一种常见的提交/编码方式,详情可以参考:<br><a href="https://imququ.com/post/four-ways-to-post-data-in-http.html" target="_blank" rel="noopener">https://imququ.com/post/four-ways-to-post-data-in-http.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">@PostMapping(value = &quot;inspection&quot;, headers = &quot;content-type=multipart/form-data&quot;)</span><br><span class="line">    @ApiOperation(httpMethod = &quot;POST&quot;, value = &quot;上报设备巡检&quot;)</span><br><span class="line">    public R inspectionReport(DeviceInspectionForm form) &#123;</span><br><span class="line"></span><br><span class="line">        DeviceInspectionEntity entity = new DeviceInspectionEntity();</span><br><span class="line">        entity.setDeviceName(form.getDeviceName());</span><br><span class="line"></span><br><span class="line">        略.........................</span><br><span class="line"></span><br><span class="line">        JSONObject uploadResult = null;</span><br><span class="line">        String picUrls = &quot;&quot;;</span><br><span class="line">        for (int i = 0; i &lt; form.getFiles().length; i++) &#123;</span><br><span class="line">            MultipartFile file = form.getFiles()[i];</span><br><span class="line">            try &#123;</span><br><span class="line">                uploadResult = fdfsClientWrapper.uploadFile(file);</span><br><span class="line">                picUrls += (uploadResult.getJSONObject(&quot;data&quot;).get(&quot;url&quot;) + &quot;,&quot;);</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        entity.setPicUrls(picUrls);</span><br><span class="line"></span><br><span class="line">        Boolean flag = deviceInspectionService.insert(entity);</span><br><span class="line">        if (flag == true) &#123;</span><br><span class="line">            return R.ok();</span><br><span class="line">        &#125; else if(flag == false) &#123;</span><br><span class="line">            return R.error();</span><br><span class="line">        &#125;</span><br><span class="line">        return R.ok();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/15/spring-boot 搭建记录/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1016,7 +1180,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1137,7 +1301,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>

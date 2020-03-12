@@ -280,6 +280,178 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/01/门户网站优化记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Theon">
+      <meta itemprop="description" content="隐忍. 厚积薄发.">
+      <meta itemprop="image" content="/uploads/avatar.webp">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Theon">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/11/01/门户网站优化记录/" class="post-title-link" itemprop="url">门户网站优化记录</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-11-01 15:16:14" itemprop="dateCreated datePublished" datetime="2018-11-01T15:16:14+08:00">2018-11-01</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-11-02 10:29:52" itemprop="dateModified" datetime="2018-11-02T10:29:52+08:00">2018-11-02</time>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近优化了公司的门户网站，由于首页十分臃肿，有大量的图片和Echart地图的内容。从一开始完全加载完毕需要2分钟以上，优化到只要7s左右，记录一下都用了哪些方法来优化网站。</p>
+<h1 id="处理图片"><a href="#处理图片" class="headerlink" title="处理图片"></a>处理图片</h1><p>压缩图片是最直接也是最有效的方法，在带宽不变的情况下，资源越大，网站加载时间也就越长。而未经处理和压缩的图片经常大的吓人。</p>
+<ol>
+<li>把PNG的图片转换为jpg通常可以缩小很多体积。（这里我不太确定jpg是不是就是最理想的图片类型）</li>
+<li>使用nginx图片过滤模块，重置图片尺寸，这样可以保证网页上图片显示的实际大小与请求的图片大小相同，如果请求的图片尺寸太大（大于页面上显示），则等于浪费了带宽。还可以避免存储多个尺寸的同一张图片。要注意的是此方法不适合并大量较大的网站，因为nginx在处理图片时会消耗服务器资源，量过大的时候会增加服务器负担。</li>
+<li>使用懒加载，用了一个叫lozad的js插件，只加载可视范围内的图片。</li>
+</ol>
+<h1 id="压缩js、css等静态资源"><a href="#压缩js、css等静态资源" class="headerlink" title="压缩js、css等静态资源"></a>压缩js、css等静态资源</h1><ul>
+<li>启用nginx的Gzip功能，可以大幅压缩静态文件的体积，减少网页传输的时间。</li>
+</ul>
+<h1 id="提高带宽"><a href="#提高带宽" class="headerlink" title="提高带宽"></a>提高带宽</h1><p>这是最简单粗暴有效的办法，有钱就行。</p>
+<h1 id="使用jsp-静态页面-ajax？"><a href="#使用jsp-静态页面-ajax？" class="headerlink" title="使用jsp/静态页面/ajax？"></a>使用jsp/静态页面/ajax？</h1><ul>
+<li>ajax： 网站本来大部分内容都是使用ajax加载的，个人认为ajax并不适合门户网站这种变动较小的网站，而且使用ajax无法使用lozad进行懒加载，而且ajax加载的内容无法被百度等搜索引擎所抓取，导致用户搜索不到。</li>
+<li>jsp：使用传统的mvc模式，我这次就是用的jsp，因为改起来比较容易，而且没有ajax上面所说的缺点。</li>
+<li>静态页面：在每次后台上传新的文章后，使用模板引擎生成静态页面，用户直接访问静态页面。显然这是最好的办法，更快的访问速度，使用服务器资源最少。</li>
+</ul>
+<h1 id="合并多个js，css文件"><a href="#合并多个js，css文件" class="headerlink" title="合并多个js，css文件"></a>合并多个js，css文件</h1><p>理论上来说，请求多个js文件所花时间会大于单个js，但我实际合并过后，不知为何网站加载时间没有缩短，反而还稍微有增加。但从几个测速网站来看，单个js确实好于多个js。这里的原因暂时还不清楚。</p>
+<h1 id="一些其他有用的东西"><a href="#一些其他有用的东西" class="headerlink" title="一些其他有用的东西"></a>一些其他有用的东西</h1><ol>
+<li><a href="https://developers.google.com/speed/pagespeed/insights/?hl=zh-CN" target="_blank" rel="noopener">Google Pagespeed Insights</a>, 这个谷歌产品可以帮你分析网站，给你优化网站的建议。</li>
+<li>Pagespeed，此工具可以集成到apache或nginx中，可以自动帮你进行网站优化，据说效果非常好，虽然我自己没有用，因为我已经手动做了大部分的工作。但这个东西有一个缺点，似乎会占用不少的服务器cpu资源。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/24/使用nginx优化网站访问速度/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1724,170 +1896,6 @@
   </article>
 
     
-        
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/多文件上传接口实现/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Theon">
-      <meta itemprop="description" content="隐忍. 厚积薄发.">
-      <meta itemprop="image" content="/uploads/avatar.webp">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Theon">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/09/03/多文件上传接口实现/" class="post-title-link" itemprop="url">多文件上传接口实现</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-09-03 15:06:45 / Modified: 15:26:08" itemprop="dateCreated datePublished" datetime="2018-09-03T15:06:45+08:00">2018-09-03</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/API/" itemprop="url" rel="index"><span itemprop="name">API</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>为移动端提交接口，接收存储表单信息，包括多个字段，和多张图片(数量不定)。</p>
-<h1 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h1><h2 id="首先把要接收的参数封装成实体类"><a href="#首先把要接收的参数封装成实体类" class="headerlink" title="首先把要接收的参数封装成实体类"></a>首先把要接收的参数封装成实体类</h2><p>需要注意的是,使用MultipartFile数组的方式来接收多张图片</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">@ApiModel(value = &quot;设备巡检表单&quot;, description = &quot;content-type=multipart/form-data, 可上传多张图片&quot;)</span><br><span class="line">public class DeviceInspectionForm &#123;</span><br><span class="line"></span><br><span class="line">    @ApiModelProperty(value = &quot;设备名称&quot;)</span><br><span class="line">    @NotBlank(message = &quot;设备名称不能为空&quot;)</span><br><span class="line">    private String deviceName;</span><br><span class="line"></span><br><span class="line">    .........</span><br><span class="line"></span><br><span class="line">    @ApiModelProperty(value = &quot;现场图片，支持多文件上传&quot;)</span><br><span class="line">    private MultipartFile[] files ;</span><br><span class="line"></span><br><span class="line">    public String getDeviceName() &#123;</span><br><span class="line">        return deviceName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setDeviceName(String deviceName) &#123;</span><br><span class="line">        this.deviceName = deviceName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .........</span><br><span class="line"></span><br><span class="line">    public MultipartFile[] getFiles() &#123;</span><br><span class="line">        return files;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setFiles(MultipartFile[] files) &#123;</span><br><span class="line">        this.files = files;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="编写controller"><a href="#编写controller" class="headerlink" title="编写controller"></a>编写controller</h2><p>这里使用公司的图片存储服务,把返回的图片url存入数据库</p>
-<p>要注意的是,在请求header中设置content-type=multipart/form-data,这是表单提交中一种常见的提交/编码方式,详情可以参考:<br><a href="https://imququ.com/post/four-ways-to-post-data-in-http.html" target="_blank" rel="noopener">https://imququ.com/post/four-ways-to-post-data-in-http.html</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">@PostMapping(value = &quot;inspection&quot;, headers = &quot;content-type=multipart/form-data&quot;)</span><br><span class="line">    @ApiOperation(httpMethod = &quot;POST&quot;, value = &quot;上报设备巡检&quot;)</span><br><span class="line">    public R inspectionReport(DeviceInspectionForm form) &#123;</span><br><span class="line"></span><br><span class="line">        DeviceInspectionEntity entity = new DeviceInspectionEntity();</span><br><span class="line">        entity.setDeviceName(form.getDeviceName());</span><br><span class="line"></span><br><span class="line">        略.........................</span><br><span class="line"></span><br><span class="line">        JSONObject uploadResult = null;</span><br><span class="line">        String picUrls = &quot;&quot;;</span><br><span class="line">        for (int i = 0; i &lt; form.getFiles().length; i++) &#123;</span><br><span class="line">            MultipartFile file = form.getFiles()[i];</span><br><span class="line">            try &#123;</span><br><span class="line">                uploadResult = fdfsClientWrapper.uploadFile(file);</span><br><span class="line">                picUrls += (uploadResult.getJSONObject(&quot;data&quot;).get(&quot;url&quot;) + &quot;,&quot;);</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        entity.setPicUrls(picUrls);</span><br><span class="line"></span><br><span class="line">        Boolean flag = deviceInspectionService.insert(entity);</span><br><span class="line">        if (flag == true) &#123;</span><br><span class="line">            return R.ok();</span><br><span class="line">        &#125; else if(flag == false) &#123;</span><br><span class="line">            return R.error();</span><br><span class="line">        &#125;</span><br><span class="line">        return R.ok();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </section>
 
   
@@ -1937,7 +1945,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -2058,7 +2066,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
